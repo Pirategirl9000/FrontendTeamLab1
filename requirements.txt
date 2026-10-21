@@ -13,10 +13,10 @@ Before programming, each team must submit a brief proposal explaining:
 5.	What can users create, view, update, and delete?
     1.	Users can post their own products, view other user’s products, update products, remove a product
 6.	What part will each team member play in this development lifecycle?
-    Violet:
-    Jarrod:
-    Brayden: 
-    Isaiah: 
+    Violet:  Filtering and search bars, product grid
+    Jarrod:  JSON product creation, some function to pull in the data (useEffect + fetch) [tenable, depends on how long creating psuedo data takes]
+    Brayden: Product Tile creation and design, bridge the implementation to product grid
+    Isaiah:  General structure of page
 
 
 Part 2 — Technical Requirements
