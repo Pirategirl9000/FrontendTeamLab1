@@ -31,15 +31,23 @@ React components	At least 5 reusable components
     * Footer
     * Filter Elements
 Props	Pass information between components
-    * 
+    * Product Information from the JSON
 useState	Manage at least 3 meaningful state values
      * inCart
-     * outOfStock
-     * wishlist
+     * available
+     * trustedSeller
 Event handling	Buttons, inputs, and other user interactions
+    * Add to cart
+    * CRUD listing form
+    * Filter Bars
 Conditional rendering	Display different content based on application state
+    * Number of products after filtering / Displaying span saying when there are no products matching
+    * Trusted seller adds little icon
+    * Not available add icon or grey out
 Lists and keys	Dynamically render collections of data
+    * Product grid items
 Forms	Controlled inputs with validation
+    * Inputting listings
 CRUD	Create, Read, Update, and Delete records
     * Creating Listing
     * Reading and displaying listings
@@ -49,6 +57,7 @@ Search	Search records by text
 Filtering	Filter records by category or status
     * Filtering by product category, name, description, seller, price
 useEffect	Load initial data and demonstrate an effect
+    * Fetch from JSON
 JSON	Store at least 10 realistic starter records
     * Starting state
 Immutable updates	Use map(), filter(), and spread syntax appropriately
