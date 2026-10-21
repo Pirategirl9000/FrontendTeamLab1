@@ -1,0 +1,4 @@
+Add your name and what you did as you go
+
+Violet
+    * Initialized repo
