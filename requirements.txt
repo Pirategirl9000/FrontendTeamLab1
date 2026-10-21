@@ -1,0 +1,94 @@
+Part 1 — Choose Your Application
+Each team must select a unique application concept. Your application should solve a problem, organize information, simulate a real-world activity, or help users make decisions.
+Theme Proposal
+Before programming, each team must submit a brief proposal explaining:
+1.	What is the application's name?
+2.	What problem does it solve?
+3.	Who would use it?
+4.	What type of information will it manage?
+5.	What can users create, view, update, and delete?
+6.	What part will each team member play in this development lifecycle?
+
+
+Part 2 — Technical Requirements
+Your application must demonstrate the concepts covered in our HTML, CSS, JavaScript, and React lectures.
+Concept	Minimum requirement
+HTML/CSS	Well-structured, styled, responsive interface
+JavaScript	Arrays, objects, functions, and array methods
+React components	At least 5 reusable components
+Props	Pass information between components
+useState	Manage at least 3 meaningful state values
+Event handling	Buttons, inputs, and other user interactions
+Conditional rendering	Display different content based on application state
+Lists and keys	Dynamically render collections of data
+Forms	Controlled inputs with validation
+CRUD	Create, Read, Update, and Delete records
+Search	Search records by text
+Filtering	Filter records by category or status
+useEffect	Load initial data and demonstrate an effect
+JSON	Store at least 10 realistic starter records
+Immutable updates	Use map(), filter(), and spread syntax appropriately
+Your team should not simply rename Campus Pulse components. Their component structure should reflect the purpose of their own application.
+Required CRUD Functionality
+Create
+Add a record
+Read
+Display records
+Update
+Edit a record
+Delete
+Remove a record
+Every CRUD operation must visibly update the React interface without reloading the page.
+For this lab, it is acceptable for changes to exist only in memory. Refreshing the browser may reset the application to its initial JSON data.
+
+
+Part 3 — Development Process
+Teams must follow our established software development process rather than immediately beginning to code.  Documentation is important at this point and should be complete and professional.
+Step 1 — Document and Divide & Conquer
+Identify the application's main features, divide the work into smaller tasks, sketch the user interface, and determine which React components are needed.
+Create a component hierarchy showing parent-child relationships and where shared state will live.
+Step 2 — Design the Algorithms
+Write pseudocode for adding, editing, deleting, searching, and filtering records.
+Explain how the application will update arrays without directly mutating React state.
+Step 3 — Build the Application
+Create a Vite project, develop the components, load starter JSON data, implement state management, and connect the components through props and callback functions.
+Create your new GitHub repository so everyone can contribute their code. 
+Build one working feature at a time.
+Step 4 — Test and Improve
+Test each CRUD operation, empty inputs, search results, filters, and the behavior when no records match.
+Fix errors and verify that the browser console contains no unresolved application errors.
+
+
+Part 4 — Team Responsibilities
+Each team member must make meaningful contributions to both development and testing.
+Every team member must be able to explain at least one component, one state variable, and one event-handling function during the demonstration.
+Each team must implement at least one additional feature that makes its application more interesting.
+Examples include a favorites system, sorting controls, a progress indicator, summary statistics, a random recommendation, or a custom status workflow.
+The feature must involve React state or meaningful JavaScript logic, not simply additional styling.
+
+
+Part 5 — Testing Documentation
+Teams must submit evidence of testing. (This will be part of your class demonstration)
+Test	Expected result
+Add a valid record	New record appears
+Submit an empty required field	Validation prevents submission
+Edit an existing record	Updated information appears
+Delete a record	Record disappears
+Search for a known record	Matching records display
+Search for nonexistent text	Empty-state message appears
+Select a filter	Only appropriate records display
+Reset search and filter	All current records display
+Students must record actual results and document at least two problems they encountered and how they resolved them.
+
+
+Part 6 — Deliverables
+Submit one team package containing:
+1.	Project proposal: Application theme, purpose, target audience, and planned features.
+2.	Design document: Component diagram, interface sketch, state-management plan, and CRUD pseudocode.
+3.	React/Vite source code: Complete project folder excluding node_modules.
+4.	README.md: Project description, team members, installation instructions, and feature overview.
+5.	Testing document: Completed test cases and debugging notes.
+6.	Team contribution report: What each member developed and tested.
+Team Class Demonstration
+Each team will give a 7–10 minute demonstration that includes an overview of the application, working CRUD operations, search and filtering, component communication, useState, and useEffect.
+I may ask individual students to explain or modify a small portion of their code.
