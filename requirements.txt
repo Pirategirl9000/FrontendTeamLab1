@@ -3,11 +3,20 @@ Each team must select a unique application concept. Your application should solv
 Theme Proposal
 Before programming, each team must submit a brief proposal explaining:
 1.	What is the application's name?
+    1.	GenStore
 2.	What problem does it solve?
+    1.	Ecommerce site that allows users to sell and buy items
 3.	Who would use it?
+    1.	Anyone
 4.	What type of information will it manage?
+    1.	Information on products
 5.	What can users create, view, update, and delete?
+    1.	Users can post their own products, view other user’s products, update products, remove a product
 6.	What part will each team member play in this development lifecycle?
+    Violet:
+    Jarrod:
+    Brayden: 
+    Isaiah: 
 
 
 Part 2 — Technical Requirements
@@ -16,17 +25,32 @@ Concept	Minimum requirement
 HTML/CSS	Well-structured, styled, responsive interface
 JavaScript	Arrays, objects, functions, and array methods
 React components	At least 5 reusable components
+    * Product Tile
+    * Product Grid
+    * Header
+    * Footer
+    * Filter Elements
 Props	Pass information between components
+    * 
 useState	Manage at least 3 meaningful state values
+     * inCart
+     * outOfStock
+     * wishlist
 Event handling	Buttons, inputs, and other user interactions
 Conditional rendering	Display different content based on application state
 Lists and keys	Dynamically render collections of data
 Forms	Controlled inputs with validation
 CRUD	Create, Read, Update, and Delete records
+    * Creating Listing
+    * Reading and displaying listings
+    * Updating the listings
+    * Deleting a listing
 Search	Search records by text
 Filtering	Filter records by category or status
+    * Filtering by product category, name, description, seller, price
 useEffect	Load initial data and demonstrate an effect
 JSON	Store at least 10 realistic starter records
+    * Starting state
 Immutable updates	Use map(), filter(), and spread syntax appropriately
 Your team should not simply rename Campus Pulse components. Their component structure should reflect the purpose of their own application.
 Required CRUD Functionality
