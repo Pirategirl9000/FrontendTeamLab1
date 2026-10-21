@@ -1,2 +1,2 @@
 # Authors
-* Violet French
+* Violet French, Jarrod Huctheon
