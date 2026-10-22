@@ -24,3 +24,4 @@
 // Now it's up to you to create 10 of these, feel free to steal real products off the internet if you run out of ideas
 // Once you complete this it's up to you to create the fetch logic that grabs this JSON and pulls it in. I would work with Isaiah to get this logic into App.jsx
     // Make sure you useState for these products that way Brayden's tiles rerender when they change
+// Don't worry about sorting them, I'm setting up the filterForm in a way that it will sort the list on mounting
