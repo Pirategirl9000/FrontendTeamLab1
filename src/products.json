@@ -6,8 +6,9 @@
 
 /*
 {
+    productID          : Integer       # Should be unique 
     productName        : String
-    productPrice       : Number         # include a revivor in your JSON.parse that formats this into USD format (see Intl.format on MDM Webdocs)
+    productPrice       : Float         # include a revivor in your JSON.parse that formats this into USD format (see Intl.format on MDM Webdocs)
     productSeller      : String
     productCategories  : Array[String]
     productDescription : String
