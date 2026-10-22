@@ -1,0 +1,25 @@
+// Comments are not permitted in JSON so remove these later Jarrod
+// You will be creating the products and linking things so below I've listed a suggested object structure for you to follow
+// Following this is important that way me (Violet) and Brayden know what data we're getting and what it will look like
+// Below is the structure of the object I want you to pass
+// The metalanguage I will use is propertyName : data-type #notes
+
+/*
+{
+    productName        : String
+    productPrice       : Number         # include a revivor in your JSON.parse that formats this into USD format (see Intl.format on MDM Webdocs)
+    productSeller      : String
+    productCategories  : Array[String]
+    productDescription : String
+    productAvailable   : Boolean
+
+    IF MORE PROPERTIES ARE TO BE ADDED FOLLOW THE CAMELCASE FORMAT AND HAVE IT START WITH 'product'
+
+
+
+} 
+*/
+
+// Now it's up to you to create 10 of these, feel free to steal real products off the internet if you run out of ideas
+// Once you complete this it's up to you to create the fetch logic that grabs this JSON and pulls it in. I would work with Isaiah to get this logic into App.jsx
+    // Make sure you useState for these products that way Brayden's tiles rerender when they change
