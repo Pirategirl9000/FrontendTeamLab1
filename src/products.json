@@ -1,7 +1,7 @@
 // Comments are not permitted in JSON so remove these later Jarrod
 // You will be creating the products and linking things so below I've listed a suggested object structure for you to follow
 // Following this is important that way me (Violet) and Brayden know what data we're getting and what it will look like
-// Below is the structure of the object I want you to pass
+// Below is the structure of the objects for you to create
 // The metalanguage I will use is propertyName : data-type #notes
 
 /*
@@ -10,7 +10,7 @@
     productName        : String
     productPrice       : Float         # include a revivor in your JSON.parse that formats this into USD format (see Intl.format on MDM Webdocs)
     productSeller      : String
-    productCategories  : Array[String]
+    productCategories  : Array[String] # When you set the product state you will lowercase these, so don't worry about case in here since we will undue it later, see comments in App.jsx for more
     productDescription : String
     productAvailable   : Boolean
 
@@ -23,5 +23,5 @@
 
 // Now it's up to you to create 10 of these, feel free to steal real products off the internet if you run out of ideas
 // Once you complete this it's up to you to create the fetch logic that grabs this JSON and pulls it in. I would work with Isaiah to get this logic into App.jsx
-    // Make sure you useState for these products that way Brayden's tiles rerender when they change
+    // You'll do this either in App.jsx or in some module but make sure you set the state of the products state variable in App.jsx, there are comments to guide you
 // Don't worry about sorting them, I'm setting up the filterForm in a way that it will sort the list on mounting
