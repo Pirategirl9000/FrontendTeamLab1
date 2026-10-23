@@ -111,7 +111,7 @@ export default function App() {
    */
   function getUniqueCategories() {
     return products
-      .map(prod => prod.productCategory.toLowerCase())                // Grab each of the products categories (map does not mutate)
+      .map(prod => prod.productCategories)                            // Grab each of the products categories (map does not mutate)
       .flat()                                                         // Flatten the array of categories into a 1D array ~ We can't use flatmap since that only flattens one level :(
       .filter((val, index, arr) => arr.indexOf(val) === index);       // Remove duplicates and return it
   }
