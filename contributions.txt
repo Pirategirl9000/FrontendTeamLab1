@@ -5,6 +5,7 @@ Violet
     * Setup file structure
     * Added filtering and sorting logic
     * Created product grid
+    * Component Heirarchy Diagram
 
 
 
@@ -12,7 +13,7 @@ TODO
     * We need 2 more components
         - 2 had to be scrapped because of how React state works so we only have a header, footer, and product tile
         - If you have suggestions add them below next to the asterisks
-            *
+            * CRUD Form - We would pass down state setter so it could alter state as a child
             *
             *
             *

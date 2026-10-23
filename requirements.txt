@@ -2,7 +2,7 @@ Part 1 — Choose Your Application
 Each team must select a unique application concept. Your application should solve a problem, organize information, simulate a real-world activity, or help users make decisions.
 Theme Proposal
 Before programming, each team must submit a brief proposal explaining:
-1.	What is the application's name?
+1.	What is the applications name?
     1.	GenStore
 2.	What problem does it solve?
     1.	Ecommerce site that allows users to sell and buy items
@@ -13,73 +13,51 @@ Before programming, each team must submit a brief proposal explaining:
 5.	What can users create, view, update, and delete?
     1.	Users can post their own products, view other user’s products, update products, remove a product
 6.	What part will each team member play in this development lifecycle?
-    Violet:  Filtering and search bars, product grid
-    Jarrod:  JSON product creation, some function to pull in the data (useEffect + fetch) [tenable, depends on how long creating psuedo data takes]
-    Brayden: Product Tile creation and design, bridge the implementation to product grid
-    Isaiah:  General structure of page
+    Violet:  Filtering and search bars, product grid, Component Hierarchy Diagram, State Management Plan
+    Jarrod:  JSON product creation, some function to pull in the data (useEffect + fetch), README (see deliverables section at bottom of requirements)
+    Brayden: Product Tile creation and design, bridge the implementation to product grid, CRUD psuedocode and implementation
+    Isaiah:  General structure of page, Interface Sketch (Sketch out the interface design either on paper or in a graphics program and email it to me vifren01@wsc.edu)
 
 
 Part 2 — Technical Requirements
 Your application must demonstrate the concepts covered in our HTML, CSS, JavaScript, and React lectures.
 Concept	Minimum requirement
-HTML/CSS	Well-structured, styled, responsive interface
-JavaScript	Arrays, objects, functions, and array methods
 React components	At least 5 reusable components
     * Product Tile
-    * Product Grid
     * Header
     * Footer
-    * Filter Elements
-Props	Pass information between components
-    * Product Information from the JSON
-useState	Manage at least 3 meaningful state values
-     * inCart
-     * available
-     * trustedSeller
+    *
+    *
 Event handling	Buttons, inputs, and other user interactions
-    * Add to cart
     * CRUD listing form
-    * Filter Bars
+    * Filter Bars - Done
 Conditional rendering	Display different content based on application state
     * Number of products after filtering / Displaying span saying when there are no products matching
-    * Trusted seller adds little icon
     * Not available add icon or grey out
-Lists and keys	Dynamically render collections of data
-    * Product grid items
 Forms	Controlled inputs with validation
     * Inputting listings
 CRUD	Create, Read, Update, and Delete records
+    * WE MUST HAVE PSUEDOCODE FOR CRUD FOR SUBMISSION SO WRITE IT
     * Creating Listing
-    * Reading and displaying listings
+    * Reading and displaying listings - Done ~ Needs documented by Brayden
     * Updating the listings
     * Deleting a listing
-Search	Search records by text
-Filtering	Filter records by category or status
-    * Filtering by product category, name, description, seller, price
-useEffect	Load initial data and demonstrate an effect
-    * Fetch from JSON
-JSON	Store at least 10 realistic starter records
-    * Starting state
-Immutable updates	Use map(), filter(), and spread syntax appropriately
-Your team should not simply rename Campus Pulse components. Their component structure should reflect the purpose of their own application.
-Required CRUD Functionality
-Create
-Add a record
-Read
-Display records
-Update
-Edit a record
-Delete
-Remove a record
+    * You will need the state setters from app ~ We could use a seperate component for this and pass down the state setter
 Every CRUD operation must visibly update the React interface without reloading the page.
 For this lab, it is acceptable for changes to exist only in memory. Refreshing the browser may reset the application to its initial JSON data.
+useEffect	Load initial data and demonstrate an effect
+    * Fetch from JSON on mount using empty dependency array
+JSON	Store at least 10 realistic starter records
+    * Starting state
+
+
 
 
 Part 3 — Development Process
 Teams must follow our established software development process rather than immediately beginning to code.  Documentation is important at this point and should be complete and professional.
 Step 1 — Document and Divide & Conquer
-Identify the application's main features, divide the work into smaller tasks, sketch the user interface, and determine which React components are needed.
-Create a component hierarchy showing parent-child relationships and where shared state will live.
+Identify the applications main features, divide the work into smaller tasks, sketch the user interface, and determine which React components are needed.
+Create a component hierarchy showing parent child relationships and where shared state will live.
 Step 2 — Design the Algorithms
 Write pseudocode for adding, editing, deleting, searching, and filtering records.
 Explain how the application will update arrays without directly mutating React state.
@@ -94,7 +72,7 @@ Fix errors and verify that the browser console contains no unresolved applicatio
 
 Part 4 — Team Responsibilities
 Each team member must make meaningful contributions to both development and testing.
-Every team member must be able to explain at least one component, one state variable, and one event-handling function during the demonstration.
+Every team member must be able to explain at least one component, one state variable, and one event handling function during the demonstration.
 Each team must implement at least one additional feature that makes its application more interesting.
 Examples include a favorites system, sorting controls, a progress indicator, summary statistics, a random recommendation, or a custom status workflow.
 The feature must involve React state or meaningful JavaScript logic, not simply additional styling.
@@ -108,7 +86,7 @@ Submit an empty required field	Validation prevents submission
 Edit an existing record	Updated information appears
 Delete a record	Record disappears
 Search for a known record	Matching records display
-Search for nonexistent text	Empty-state message appears
+Search for nonexistent text	Empty state message appears
 Select a filter	Only appropriate records display
 Reset search and filter	All current records display
 Students must record actual results and document at least two problems they encountered and how they resolved them.
@@ -117,8 +95,8 @@ Students must record actual results and document at least two problems they enco
 Part 6 — Deliverables
 Submit one team package containing:
 1.	Project proposal: Application theme, purpose, target audience, and planned features.
-2.	Design document: Component diagram, interface sketch, state-management plan, and CRUD pseudocode.
-3.	React/Vite source code: Complete project folder excluding node_modules.
+2.	Design document: Component diagram, interface sketch, state management plan, and CRUD pseudocode.
+3.	React\Vite source code: Complete project folder excluding node_modules.
 4.	README.md: Project description, team members, installation instructions, and feature overview.
 5.	Testing document: Completed test cases and debugging notes.
 6.	Team contribution report: What each member developed and tested.

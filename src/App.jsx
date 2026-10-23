@@ -120,8 +120,7 @@ export default function App() {
   // TODO: Make sure you create the header, footer, and any other items for the structure of the page and style it :)
   return (
     <>
-    {/* This contains filtering items, these need to be top level since it is tightly coupled to other components via products array */}
-    {/* Unfortunately we can't really just pass down the setters otherwise shit gets gross and doesn't work pretty */}
+    {/* TODO: Add filter clearing button */}
     <section className="filterForm">
       {/* DO NOT CHANGE THE CLASS NAME ON THE FILTER INPUTS THEY ARE LINKED TO FILTERING LOGIC */}
       <select className="selectFilter" onChange={updateFilters}>
@@ -131,8 +130,9 @@ export default function App() {
       <input type="text" placeholder="Search for products" className="searchFilter" onChange={updateFilters}></input>
     </section>
 
+    {/* TODO: Isaiah add some conditional rendering here so when there are no products something gets displayed */}
     <section className="products">
-      {products.map(prod => <ProductTile product={prod}></ProductTile>)}
+      {filteredProducts.map(prod => <ProductTile product={prod}></ProductTile>)}
     </section>
 
     </>
