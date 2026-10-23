@@ -20,3 +20,6 @@ This program is a mockup of an ECommerce site that display products as tiles and
     * Ensure you have npm installed and in your system path
 * Run `npm install` to install the dependencies
 * Run `npm run dev` and navigate to http://localhost:5173/
+
+## Further Reading
+For more extensive documentation refer to documentation/documentation.pdf in your installation
