@@ -117,6 +117,8 @@ export default function App() {
       .filter((val, index, arr) => arr.indexOf(val) === index);       // Remove duplicates and return it
   }
 
+  // TODO: Isaiah this is your stuff below, your job is to create the proper flow for the document, I (Violet) added my stuff below
+  // TODO: Make sure you create the header, footer, and any other items for the structure of the page and style it :)
   return (
     <>
     {/* This contains filtering items, these need to be top level since it is tightly coupled to other components via products array */}
@@ -131,7 +133,7 @@ export default function App() {
     </section>
 
     <section className="products">
-      <ProductGrid products={filteredProducts}></ProductGrid>
+      {products.map(prod => <ProductTile product={prod}></ProductTile>)}
     </section>
 
     </>
