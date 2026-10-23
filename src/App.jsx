@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
@@ -7,8 +7,25 @@ import ProductTile from './components/ProductTile.jsx'
 export default function App() {
   const [products, setProducts] = useState([]);
 
-  // TODO: Jarrod you need to populate this later with the fetched products (It can't be the initial state since hooks need to be top-level)
-  // TODO: Jarrod I also need the initial fetching of the products to also lowercase all categories so: grab all the products, lowercase them, then setProducts ~ My filter logic relies on this
+  useEffect(() => {
+    fetch('/products.json')
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then(data => {
+        // lowercase all categories for filtering
+        const lowercasedData = data.map(product => ({
+          ...product,
+          productCategories: product.productCategories.map(category => category.toLowerCase())
+        }));
+        setProducts(lowercasedData); // set the products state with the lowercased data
+        setFilteredProducts(lowercasedData); // set the filtered products state with the lowercased data
+      })
+      .catch(error => console.error('Error fetching products:', error));
+  }, []);
 
   // Filtering stuff
   const [filteredProducts, setFilteredProducts] = useState([]);  // TODO: Jarrod after you populate products populate the filteredProducts by calling 'setFilteredProducts(filterProducts())'
