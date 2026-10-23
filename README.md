@@ -3,8 +3,11 @@
 ## Authors
 * Violet French
 * Jarrod Huctheon
-* 
-* 
+* Brayden Hermanson
+* Isaiah Guilliatt
+
+## Description
+This program is a mockup of an ECommerce site that display products as tiles and allows the user to update, delete, or add new products to the site. These changes are temporary and will be reset whent the program is next loaded up. The program starts with 10 products written i a server side JSON file that gets loaded in for the frontend. The site allows for filtering of product by various properties including category, name, description, price, and seller
 
 ## Features
 * Viewing of product listings and creating new listings
