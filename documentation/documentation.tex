@@ -45,11 +45,19 @@ To implement the filtering I decided to copy the style I've used in the past few
 
 I wasn't happy that I had to move the logic back to App since I know it will make things very messy in the long run. With me moving it back to App it resulted in around 150 lines of code for something that would be far better as a component. There may be a way to do it as a component but it would be such a headache to set up that it would wind up making things more complex. This is definitely a pitfall of React. The increased complexity in writing dynamic code hurts how modular you can make the program. I do think with a database things would be a lot better since database langauges like SQL include filtering clauses and sorting clauses which would trivialize this. So in all honestly you can't blame React too much but I must say that state is a headache to deal with as compared to something like classes and properties you might be working with if you were using a basic templating engine such as Thymeleaf (less reactive but is also SSR)
 
+\subsubsection{Product Grid}
+The product grid was originally designed to be it's own component but this was later changed. I realized that the product grid did not have any unique functions are complex code so it didn't need to be its own component. All the product grid was responsible for was being a parent element for all the product tiles. The product grid was not a reused component so it had no place as a react component. Instead the product grid became a section element that stored the product tiles. The product tile class was used by Brayden and my job was to ensure his component was called and given the right information. To do this I simply mapped each of the filtered products to a ProductTile component inside the products section (product grid).
+
 
 \subsection{Brayden}
+\subsubsection{CRUD Implementation}
+\subsubsection{Product Tile}
 
 \subsection{Jarrod}
+\subsubsection{JSON File}
+
 
 \subsection{Isaiah}
+\subsubsection{Interface Design}
 
 \end{document}
