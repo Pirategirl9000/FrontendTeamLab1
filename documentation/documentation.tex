@@ -19,7 +19,13 @@
 \newpage
 
 \section{State Management}
-
-
+\subsection{Products}
+The products state is the central state of the program. Products is stored in App.jsx and contains all of the products for displaying
+\subsection{Filtered-Products}
+The filteredProducts state stores the filtered products which is given out to the ProductTile components for displaying. Filtered products is changed when the filter inputs change or when the overall products change causing it to re-filter the products. The filtered products are what gets displayed to the user even if no filtering is currently active. Due to filteredProducts being used by the product tiles it is also stored in App.jsx where the product grid is at. Each of the filtered products gets passed as a prop to product tiles via a map
+\subsection{Search Filter}
+Search filter stores the current text search query. When the input for the search input changes it causes the search filter to change which also causes a rerender of the product tiles to match the new query. The search filter contains the raw text of the search box and assessing the queries is done by the filterProducts function. Queries can use relational operators ($>$=, $<$=, $>$, $<$, =, ==) to check price or they can use '\&' as a delimiter for multiple combined queries. This filter is stored in App.jsx
+\subsection{Select Filter}
+The Select filter acts very similar to search filtering but provides a more accessible interface for filtering. Rather than using a text query to filter the user just clicks on an option in a dropdown box of categories for product. When the state of the dropdown changes the select filter does too triggering a rerender of the product tiles. This filter, like searchFilter, is stored in App.jsx
 
 \end{document}
