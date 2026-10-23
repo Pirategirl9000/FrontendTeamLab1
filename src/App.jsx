@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './App.css';
-import ProductGrid from './components/Products/ProductGrid';
 
 export default function App() {
   const [products, setProducts] = useState([]);  
