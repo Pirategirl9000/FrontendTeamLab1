@@ -18,6 +18,8 @@ Before programming, each team must submit a brief proposal explaining:
     Brayden: Product Tile creation and design, bridge the implementation to product grid, CRUD psuedocode and implementation
     Isaiah:  General structure of page, Interface Sketch (Sketch out the interface design either on paper or in a graphics program and email it to me vifren01@wsc.edu)
 
+Teams must maintain a brief development log describing
+their design decisions and problems encountered
 
 Part 2 — Technical Requirements
 Your application must demonstrate the concepts covered in our HTML, CSS, JavaScript, and React lectures.

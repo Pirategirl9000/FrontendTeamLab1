@@ -17,3 +17,13 @@ TODO
             *
             *
             *
+
+Dev Log
+* Fill out the dev log as you implement new features, refer to mine to see how to do it
+* Do it paragraph style so do not use multiple lines unless you're moving onto another paragraph (use alt + z to enable line wrapping in VSC so you can see what you are writing)
+    * This is so when I move it to the LaTeX documentation it will be easier to paste in 
+        * I recommend letting me paste it in since you almost certainly do not have a LaTeX compiler or the patience to install one, this is the place where you should add things for me to paste into the documentation
+        * If you'd like to view the documentation at any moment go to /documentation/documentation.pdf, DO NOT TOUCH THE document.tex FILE UNLESS YOU KNOW LaTeX
+Violet Filtering
+    To implement the filtering I decided to copy the style I've used in the past few programs. I used both a category select option and a text search filter. When filtering the products it applies both of these to the list of products and returns the filtered list. I also added alphabetical sorting like in my previous programs. I originally designed the filtering as its own component called FilterForm but realized near the end that this would not work very well because of how React state works. Instead I moved it up to App.jsx and redesigned the heirarchy. This wasn't a problem as I did this on my own time when the component heirarchy was still in its infancy. Going into this project we didn't have enough time to plan things out and the FilterForm is when I started to realize this. After setting everything up I cemented a component heirarchy diagram to guide further features now that we had a better idea of what our product will look like.
+    I wasn't happy that I had to move the logic back to App since I know it will make things very messy in the long run. With me moving it back to App it resulted in around 150 lines of code for something that would be far better as a component. There may be a way to do it as a component but it would be such a headache to set up that it would wind up making things more complex. This is definitely a pitfall of React. The increased complexity in writing dynamic code hurts how modular you can make the program. I do think with a database things would be a lot better since database langauges like SQL include filtering clauses and sorting clauses which would trivialize this. So in all honestly you can't blame React too much but I must say that state is a headache to deal with as compared to something like classes and properties you might be working with if you were using a basic templating engine such as Thymeleaf (less reactive but is also SSR)
