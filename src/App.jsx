@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import './App.css';
+import Header from './components/Header.jsx'
+import Footer from './components/Footer.jsx'
+import ProductTile from './components/ProductTile.jsx'
 
 export default function App() {
-  const [products, setProducts] = useState([]);  
-  
+  const [products, setProducts] = useState([]);
+
   // TODO: Jarrod you need to populate this later with the fetched products (It can't be the initial state since hooks need to be top-level)
   // TODO: Jarrod I also need the initial fetching of the products to also lowercase all categories so: grab all the products, lowercase them, then setProducts ~ My filter logic relies on this
 
@@ -19,16 +22,16 @@ export default function App() {
    * @param {Event} e The event that spurred this action 
    */
   function updateFilters(e) {
-      switch (e.target.className) {
-        case "selectFilter":  // Category selection changed 
-          setCategorySelected(e.target.value);
-          break;
-        case "searchFilter":  // Search query changed
-          setSearchText(e.target.value);
-          break;
-      }
+    switch (e.target.className) {
+      case "selectFilter":  // Category selection changed 
+        setCategorySelected(e.target.value);
+        break;
+      case "searchFilter":  // Search query changed
+        setSearchText(e.target.value);
+        break;
+    }
 
-      setFilteredProducts(filterProducts());  // This will trigger the ProductGrid to rerender with the updated filters
+    setFilteredProducts(filterProducts());  // This will trigger the ProductGrid to rerender with the updated filters
   }
 
   /**
@@ -71,7 +74,7 @@ export default function App() {
       if (comparators.includes(query.charAt(0))) {  // They may want some kind of comparison
         comparisonOp += query.charAt(0);
         if (query.charAt(1) === '=') {  // They might be checking <= >= or ==
-            comparisonOp += '=';
+          comparisonOp += '=';
         }
       }
 
@@ -84,12 +87,12 @@ export default function App() {
           switch (comparisonOp) {
             case '=':
             case '==': return prod.productPrice === price;
-            case '<':  return prod.productPrice < price;
-            case '>':  return prod.productPrice > price;
+            case '<': return prod.productPrice < price;
+            case '>': return prod.productPrice > price;
             case '<=': return prod.productPrice <= price;
             case '>=': return prod.productPrice >= price;
           }
-        }        
+        }
 
         if (prod.productName.toLowerCase().includes(query)) return true;
         if (prod.productDescription.toLowerCase().includes(query)) return true;
@@ -120,21 +123,22 @@ export default function App() {
   // TODO: Make sure you create the header, footer, and any other items for the structure of the page and style it :)
   return (
     <>
-    {/* TODO: Add filter clearing button */}
-    <section className="filterForm">
-      {/* DO NOT CHANGE THE CLASS NAME ON THE FILTER INPUTS THEY ARE LINKED TO FILTERING LOGIC */}
-      <select className="selectFilter" onChange={updateFilters}>
-        <Option value="All">All</Option>
-        {getUniqueCategories(products).map(cat => <Option key={cat} value={cat}>{cat}</Option>)}
-      </select>
-      <input type="text" placeholder="Search for products" className="searchFilter" onChange={updateFilters}></input>
-    </section>
+      <Header />
+      {/* TODO: Add filter clearing button */}
+      <section className="filterForm">
+        {/* DO NOT CHANGE THE CLASS NAME ON THE FILTER INPUTS THEY ARE LINKED TO FILTERING LOGIC */}
+        <select className="selectFilter" onChange={updateFilters}>
+          <option value="All">All</option>
+          {getUniqueCategories(products).map(cat => <option key={cat} value={cat}>{cat}</option>)}
+        </select>
+        <input type="text" placeholder="Search for products" className="searchFilter" onChange={updateFilters}></input>
+      </section>
 
-    {/* TODO: Isaiah add some conditional rendering here so when there are no products something gets displayed */}
-    <section className="products">
-      {filteredProducts.map(prod => <ProductTile product={prod}></ProductTile>)}
-    </section>
-
+      {/* TODO: Isaiah add some conditional rendering here so when there are no products something gets displayed */}
+      <section className="products">
+        {filteredProducts.map(prod => <ProductTile product={prod}></ProductTile>)}
+      </section>
+      <Footer />
     </>
   )
 }
