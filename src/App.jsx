@@ -1,8 +1,36 @@
 import { useState } from 'react';
 import './App.css';
+import ProductGrid from './components/Products/ProductGrid';
 
 export default function App() {
-  const [products, setProducts] = useState([]);  // TODO: Jarrod you need to populate this later with the fetched products (It can't be the initial state since hooks need to be top-level)
+  const [products, setProducts] = useState([]);  
+  
+  // TODO: Jarrod you need to populate this later with the fetched products (It can't be the initial state since hooks need to be top-level)
+  // TODO: Jarrod I also need the initial fetching of the products to also lowercase all categories so: grab all the products, lowercase them, then setProducts ~ My filter logic relies on this
+
+  // Filtering stuff
+  const [filteredProducts, setFilteredProducts] = useState([]);  // TODO: Jarrod after you populate products populate the filteredProducts by calling 'setFilteredProducts(filterProducts())'
+  const [searchText, setSearchText] = useState("");
+  const [categorySelected, setCategorySelected] = useState("All");
+
+  // TODO: Jarrod please tell me (Violet) when you get some product data set up since I haven't yet tested my filtering logic so I have no clue if any of it works
+
+  /**
+   * Updates the state of the filters and then updates the filtered products triggering a rerender of the product grid
+   * @param {Event} e The event that spurred this action 
+   */
+  function updateFilters(e) {
+      switch (e.target.className) {
+        case "selectFilter":  // Category selection changed 
+          setCategorySelected(e.target.value);
+          break;
+        case "searchFilter":  // Search query changed
+          setSearchText(e.target.value);
+          break;
+      }
+
+      setFilteredProducts(filterProducts());  // This will trigger the ProductGrid to rerender with the updated filters
+  }
 
   /**
    * Compares two strings and returns a number indicating which comes first alphabetically (uses Array.prototype.sort predicate rules)
@@ -22,12 +50,57 @@ export default function App() {
   }
 
   /**
-   * Filters the products by the current filtering queries, alphabetizes the results, and then sets the state using the setter provided to the FilterForm
+   * Filters the products by the current filtering queries, alphabetizes the results, and returns the filtered products
    * @param {Event} e The event that triggered this filtering to occur
    * @returns {Array[Object]} an array of the products filtered and sorted
    */
-  function filter(e) {
-    let filteredProducts = products;  // TODO: Add the filtering logic
+  function filterProducts(e) {
+    let filteredProducts = products.map();  // TODO: Add the filtering logic
+    const searchQueries = searchText.toLowerCase().split('&');  // Allows multiple search queries
+    const category = categorySelected.toLowerCase();
+    const comparators = "<>=";
+    let price;
+
+    if (category !== "all") filteredProducts.filter(prod => prod.productCategories.includes(category));  // Filter by category dropdown ~ productCategories should already be lowercase
+
+    for (const query of searchQueries) {
+      // FORMAT THE QUERY AND PULL ANY IMPORTANT INFO
+      query = query.toLowerCase();
+      let comparisonOp = "";  // this stores the comparator the user might be using for the search query
+
+      // Peel off the first one or two characters if they are comparator symbols
+      if (comparators.includes(query.charAt(0))) {  // They may want some kind of comparison
+        comparisonOp += query.charAt(0);
+        if (query.charAt(1) === '=') {  // They might be checking <= >= or ==
+            comparisonOp += '=';
+        }
+      }
+
+      if (comparisonOp) price = Number.parseFloat(query.slice(comparisonOp.length));
+
+      // START THE FILTERING
+      filteredProducts = filteredProducts.filter(prod => {
+        // If we have a comparison operator and price is a number then we filter by price
+        if (comparisonOp && !Number.isNaN(price)) {
+          switch (comparisonOp) {
+            case '=':
+            case '==': return prod.productPrice === price;
+            case '<':  return prod.productPrice < price;
+            case '>':  return prod.productPrice > price;
+            case '<=': return prod.productPrice <= price;
+            case '>=': return prod.productPrice >= price;
+          }
+        }        
+
+        if (prod.productName.toLowerCase().includes(query)) return true;
+        if (prod.productDescription.toLowerCase().includes(query)) return true;
+        if (prod.productSeller.toLowerCase().includes(query)) return true;
+
+        // Check for category match
+        for (const cat of prod.productCategories) if (cat.includes(query)) return true;
+      })
+    }
+
 
     return filteredProducts.sort(alphabetCompare);
   }
@@ -39,7 +112,7 @@ export default function App() {
    */
   function getUniqueCategories() {
     return products
-      .map(prod => prod.productCategory)                              // Grab each of the products categories (map does not mutate)
+      .map(prod => prod.productCategory.toLowerCase())                // Grab each of the products categories (map does not mutate)
       .flat()                                                         // Flatten the array of categories into a 1D array ~ We can't use flatmap since that only flattens one level :(
       .filter((val, index, arr) => arr.indexOf(val) === index);       // Remove duplicates and return it
   }
@@ -49,10 +122,16 @@ export default function App() {
     {/* This contains filtering items, these need to be top level since it is tightly coupled to other components via products array */}
     {/* Unfortunately we can't really just pass down the setters otherwise shit gets gross and doesn't work pretty */}
     <section className="filterForm">
-      <select className="selectFilter" onChange={filter}>
-        {getUniqueCategories(products).map(cat => <Option key={cat}>{cat}</Option>)}
+      {/* DO NOT CHANGE THE CLASS NAME ON THE FILTER INPUTS THEY ARE LINKED TO FILTERING LOGIC */}
+      <select className="selectFilter" onChange={updateFilters}>
+        <Option value="All">All</Option>
+        {getUniqueCategories(products).map(cat => <Option key={cat} value={cat}>{cat}</Option>)}
       </select>
-      <input type="text" placeholder="Search for products" className="searchFilter" onChange={filter}></input>
+      <input type="text" placeholder="Search for products" className="searchFilter" onChange={updateFilters}></input>
+    </section>
+
+    <section className="products">
+      <ProductGrid products={filteredProducts}></ProductGrid>
     </section>
 
     </>
