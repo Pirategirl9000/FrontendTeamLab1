@@ -6,6 +6,7 @@ Violet
     * Added filtering and sorting logic
     * Created product grid
     * Component Heirarchy Diagram
+    * State Management Document
 
 
 
