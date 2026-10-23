@@ -62,7 +62,7 @@ export default function App() {
 
     if (category !== "all") filteredProducts.filter(prod => prod.productCategories.includes(category));  // Filter by category dropdown ~ productCategories should already be lowercase
 
-    for (const query of searchQueries) {
+    for (let query of searchQueries) {
       // FORMAT THE QUERY AND PULL ANY IMPORTANT INFO
       query = query.toLowerCase();
       let comparisonOp = "";  // this stores the comparator the user might be using for the search query
