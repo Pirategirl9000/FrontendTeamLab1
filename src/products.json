@@ -1,27 +1,90 @@
-// Comments are not permitted in JSON so remove these later Jarrod
-// You will be creating the products and linking things so below I've listed a suggested object structure for you to follow
-// Following this is important that way me (Violet) and Brayden know what data we're getting and what it will look like
-// Below is the structure of the objects for you to create
-// The metalanguage I will use is propertyName : data-type #notes
-
-/*
-{
-    productID          : Integer       # Should be unique 
-    productName        : String
-    productPrice       : Float         # include a revivor in your JSON.parse that formats this into USD format (see Intl.format on MDM Webdocs)
-    productSeller      : String
-    productCategories  : Array[String] # When you set the product state you will lowercase these, so don't worry about case in here since we will undue it later, see comments in App.jsx for more
-    productDescription : String
-    productAvailable   : Boolean
-
-    IF MORE PROPERTIES ARE TO BE ADDED FOLLOW THE CAMELCASE FORMAT AND HAVE IT START WITH 'product'
-
-
-
-} 
-*/
-
-// Now it's up to you to create 10 of these, feel free to steal real products off the internet if you run out of ideas
-// Once you complete this it's up to you to create the fetch logic that grabs this JSON and pulls it in. I would work with Isaiah to get this logic into App.jsx
-    // You'll do this either in App.jsx or in some module but make sure you set the state of the products state variable in App.jsx, there are comments to guide you
-// Don't worry about sorting them, I'm setting up the filterForm in a way that it will sort the list on mounting
+[{ "productID": 1, 
+    "productName": "Wireless Gaming Mouse", 
+    "productPrice": 179.99, 
+    "productSeller": "John Smith", 
+    "productCategories": ["Technology"], 
+    "productDescription": "Logitech G Pro X Superlight Wireless Gaming Mouse.", 
+    "productAvailable": true 
+},
+{ "productID": 2, 
+    "productName": "Hiking Backpack", 
+    "productPrice": 125.00, 
+    "productSeller": "Kyle Larson", 
+    "productCategories": ["Outdoor"], 
+    "productDescription": "The North Face Borealis Backback, Color: Black", 
+    "productAvailable": true 
+},
+{ "productID": 3, 
+    "productName": "Fanatec Formula Wheel", 
+    "productPrice": 599.99, 
+    "productSeller": "Max Verstappen", 
+    "productCategories": ["Sports"], 
+    "productDescription": "Fanatec Formula Wheel for sim racing. PC compatible only", 
+    "productAvailable": false 
+},
+{ "productID": 4, 
+    "productName": "Running Shoes", 
+    "productPrice": 109.00, 
+    "productSeller": "Nike", 
+    "productCategories": ["Clothing"], 
+    "productDescription": "Nike Structure S26 running shoes.", 
+    "productAvailable": true 
+},
+{ "productID": 5, 
+    "productName": "Example Product", 
+    "productPrice": 65.00, 
+    "productSeller": "The North Face", 
+    "productCategories": ["Clothing"], 
+    "productDescription": "Men's The North Face Evolution Simple Dome, Color: Black", 
+    "productAvailable": false 
+},
+{ "productID": 6, 
+    "productName": "Wireless Gaming Keyboard", 
+    "productPrice": 129.99, 
+    "productSeller": "Logitech", 
+    "productCategories": ["Technology"], 
+    "productDescription": "Logitech G Pro X Superlight Wireless Gaming Keyboard.", 
+    "productAvailable": false 
+},
+{ "productID": 7, 
+    "productName": "Intel Core i9-13900K", 
+    "productPrice": 599.99, 
+    "productSeller": "Intel", 
+    "productCategories": ["Technology"], 
+    "productDescription": "Intel Core i9-13900K Processor.", 
+    "productAvailable": false 
+},
+{ "productID": 8, 
+    "productName": "AMD Ryzen 9 7950X", 
+    "productPrice": 599.99, 
+    "productSeller": "AMD", 
+    "productCategories": ["Technology"], 
+    "productDescription": "AMD Ryzen 9 7950X Processor.", 
+    "productAvailable": false 
+},
+{ "productID": 9, 
+    "productName": "PlayStation 5", 
+    "productPrice": 599.99, 
+    "productSeller": "Sony", 
+    "productCategories": ["Technology"], 
+    "productDescription": "Sony PlayStation 5 Gaming Console.", 
+    "productAvailable": false 
+},
+{ "productID": 10, 
+    "productName": "PlayStation 5 Controller", 
+    "productPrice": 79.00, 
+    "productSeller": "Sony", 
+    "productCategories": ["Technology"], 
+    "productDescription": "Sony PlayStation 5 Wireless Controller.", 
+    "productAvailable": false 
+},
+{ "productID": 11, 
+    "productName": "Rawlings Icon 3 Baseball Bat", 
+    "productPrice": 449.99, 
+    "productSeller": "Rawlings", 
+    "productCategories": ["Sports"], 
+    "productDescription": "Rawlings Icon 3 Baseball Bat. Carbon Composite Construction. Length: 33 inches. Weight: 29 ounces.", 
+    "productAvailable": false
+    
+}
+]
