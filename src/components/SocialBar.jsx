@@ -1,5 +1,9 @@
 import SocialTile from './SocialTile';
 
+/**
+ * Returns a section containing social tiles that can be used to access the site's social media accounts
+ * @returns Returns a section containing all the social tiles used by the site
+ */
 export default function SocialBar() {
     return (
         <section className="socialBar">
