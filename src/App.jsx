@@ -6,33 +6,37 @@ import ProductTile from './components/ProductTile.jsx'
 
 export default function App() {
   const [products, setProducts] = useState([]);
+  
+  // Filtering stuff
+  const [filteredProducts, setFilteredProducts] = useState([]); 
+  const [searchText, setSearchText] = useState("");
+  const [categorySelected, setCategorySelected] = useState("All");
 
+  // Pull in the products from the json and format them
   useEffect(() => {
     fetch('/products.json')
       .then(res => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
+        if (!res.ok) throw new Error('Network response was not ok');
+
         return res.json();
       })
       .then(data => {
         // lowercase all categories for filtering
-        const lowercasedData = data.map(product => ({
-          ...product,
-          productCategories: product.productCategories.map(category => category.toLowerCase())
+        const lowercasedData = data.map(prod => ({
+          ...prod,
+          productCategories: prod.productCategories.map(cat => cat.toLowerCase())
         }));
+
         setProducts(lowercasedData); // set the products state with the lowercased data
         setFilteredProducts(lowercasedData); // set the filtered products state with the lowercased data
       })
       .catch(error => console.error('Error fetching products:', error));
   }, []);
 
-  // Filtering stuff
-  const [filteredProducts, setFilteredProducts] = useState([]);  // TODO: Jarrod after you populate products populate the filteredProducts by calling 'setFilteredProducts(filterProducts())'
-  const [searchText, setSearchText] = useState("");
-  const [categorySelected, setCategorySelected] = useState("All");
+  useEffect(() => {
+    setFilteredProducts(filterProducts);
+  }, [categorySelected, searchText]);
 
-  // TODO: Jarrod please tell me (Violet) when you get some product data set up since I haven't yet tested my filtering logic so I have no clue if any of it works
 
   /**
    * Updates the state of the filters and then updates the filtered products triggering a rerender of the product grid
@@ -47,8 +51,6 @@ export default function App() {
         setSearchText(e.target.value);
         break;
     }
-
-    setFilteredProducts(filterProducts());  // This will trigger the ProductGrid to rerender with the updated filters
   }
 
   /**
@@ -74,13 +76,13 @@ export default function App() {
    * @returns {Array[Object]} an array of the products filtered and sorted
    */
   function filterProducts(e) {
-    let filteredProducts = products.map();  // TODO: Add the filtering logic
+    let filteredProducts = products;
     const searchQueries = searchText.toLowerCase().split('&');  // Allows multiple search queries
     const category = categorySelected.toLowerCase();
     const comparators = "<>=";
     let price;
 
-    if (category !== "all") filteredProducts.filter(prod => prod.productCategories.includes(category));  // Filter by category dropdown ~ productCategories should already be lowercase
+    if (category !== "all") filteredProducts = filteredProducts.filter(prod => prod.productCategories.includes(category));  // Filter by category dropdown ~ productCategories should already be lowercase
 
     for (let query of searchQueries) {
       // FORMAT THE QUERY AND PULL ANY IMPORTANT INFO

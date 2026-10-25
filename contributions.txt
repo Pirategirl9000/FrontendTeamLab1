@@ -22,6 +22,9 @@ TODO
 Testing
     * Product fetching (Violet)
         - Once products were fetched I wrote a simple console.log to test whether products were properly being pulled in. I found out that files in the React folder src/ always prepend <!doctype onto every component. To fix this I moved the products.json file to the public directory where it won't be edited by the React compiler. This fixed the issue and allowe us to see that the products were properly being pulled in
+    * Product Filtering (Violet)
+        - The used a simple console loggin in the updateFilters function since this calls filterProducts setting the new filtered products. I notice a few errors in my logic. The first error was that I left some old placeholder code in there which was causing an error. Once I removed that I found errors with category select filtering. The first was that it was never being applied since Array.filter is not a mutator it returns a new array. After fixing that I noticed the filters aren't updating before the filter meaning they use the last category selected. The problem witht this one is that state does not immediately change, using setState only changes what will be used on the next render as stated in the React documentation. To fix this I moved the filtering of products back into a useEffect. This useEffect triggers whenever filters and change and on mount so it will filter the products only after the new value is acquired since useEffect will get the latest state of a variable. After doing this I saw that the category matched what was inputted.
+        - To test the product filtering I wrote another use effect which would log the filtered products anytime they changed using a useEffect. I then would check the products outputted to ensure they all had something relating to the given filter (either a matching category or text somewhere)
 
 Dev Log
 * Fill out the dev log as you implement new features, refer to mine to see how to do it
