@@ -1,9 +1,9 @@
 import { useState, useEffect} from 'react';
-import { flushSync } from 'react-dom';  // Immediately updates state variables
 import './App.css';
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import ProductTile from './components/ProductTile.jsx'
+import SocialBar from './components/SocialBar.jsx'
 
 export default function App() {
   const TESTING_ENV = true;
@@ -223,6 +223,8 @@ export default function App() {
       <section className="products">
         {filteredProducts.map(prod => <ProductTile product={prod} key={prod.productID}></ProductTile>)}
       </section>
+
+      <SocialBar />
       <Footer />
     </>
   )
