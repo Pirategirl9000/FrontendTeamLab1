@@ -153,7 +153,7 @@ export default function App() {
 
       {/* TODO: Isaiah add some conditional rendering here so when there are no products something gets displayed */}
       <section className="products">
-        {filteredProducts.map(prod => <ProductTile product={prod}></ProductTile>)}
+        {filteredProducts.map(prod => <ProductTile product={prod} key={prod.productID}></ProductTile>)}
       </section>
       <Footer />
     </>

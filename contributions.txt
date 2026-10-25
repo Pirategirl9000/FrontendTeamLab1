@@ -19,6 +19,10 @@ TODO
             *
             *
 
+Testing
+    * Product fetching (Violet)
+        - Once products were fetched I wrote a simple console.log to test whether products were properly being pulled in. I found out that files in the React folder src/ always prepend <!doctype onto every component. To fix this I moved the products.json file to the public directory where it won't be edited by the React compiler. This fixed the issue and allowe us to see that the products were properly being pulled in
+
 Dev Log
 * Fill out the dev log as you implement new features, refer to mine to see how to do it
 * Do it paragraph style so do not use multiple lines unless you're moving onto another paragraph (use alt + z to enable line wrapping in VSC so you can see what you are writing)
