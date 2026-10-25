@@ -1,16 +1,57 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
+import { flushSync } from 'react-dom';  // Immediately updates state variables
 import './App.css';
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import ProductTile from './components/ProductTile.jsx'
 
 export default function App() {
+  /**
+   * Runs test cases
+   */
+  function test() {
+    const fAssert = (value, expected, msg="Assertion test failed") => {
+      flushSync();  // Grab latest state
+      if (value !== expected) console.error("Assertion Fail: " + msg);
+    }
+
+    setSearchText("");
+    setCategorySelected("NOMATCH");  //Categories are never lowercase so should return nothing
+    fAssert(filteredProducts.length, 0, "Returned products for invalid category filter");
+
+    setCategorySelected("all");
+    setSearchText("");
+    fAssert(filteredProducts, products, "Did not pass check for no-filter");
+
+    setSearchText("˫˫˫˫˫˫˫˫");  // Such an obscure character combo no one would ever have it ~ Ideally we would disallow it
+    setCategorySelected("all");
+    fAssert(filteredProducts.length, 0, "Returned products for invalid search filter");
+
+
+
+
+
+
+
+    // Reset everything
+    setRepullProds(old => ++old);  // Increment it to trigger a resetting of the products array to its original state
+    setSearchText("");
+    setCategorySelected("all");
+  }
+
+  // TESTING CODE
+  useEffect(() => {queueMicrotask(()=>test())}, []);
+
+
   const [products, setProducts] = useState([]);
   
   // Filtering stuff
   const [filteredProducts, setFilteredProducts] = useState([]); 
   const [searchText, setSearchText] = useState("");
   const [categorySelected, setCategorySelected] = useState("All");
+
+  // Testing state
+  const [repullProds, setRepullProds] = useState(0);  // Increment this to trigger another fetch to the products.json - use it for testing
 
   // Pull in the products from the json and format them
   useEffect(() => {
@@ -31,7 +72,7 @@ export default function App() {
         setFilteredProducts(lowercasedData); // set the filtered products state with the lowercased data
       })
       .catch(error => console.error('Error fetching products:', error));
-  }, []);
+  }, [repullProds]);
 
   useEffect(() => {
     setFilteredProducts(filterProducts);
@@ -138,8 +179,6 @@ export default function App() {
       .filter((val, index, arr) => arr.indexOf(val) === index);       // Remove duplicates and return it
   }
 
-  // TODO: Isaiah this is your stuff below, your job is to create the proper flow for the document, I (Violet) added my stuff below
-  // TODO: Make sure you create the header, footer, and any other items for the structure of the page and style it :)
   return (
     <>
       <Header />
