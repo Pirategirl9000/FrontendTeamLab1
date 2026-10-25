@@ -63,11 +63,10 @@ export default function App() {
     filtered = filterProducts(prods);
     fAssert(filtered.length, 0, "Returned products for invalid search filter");
 
-    // CHECK ALPHABETICAL
+    // CHECK ALPHABETICAL - LIGHT CHECK AND ONLY CHECKS FIRST LETTER
     categorySelected = "all";
     searchText = "";
     filtered = filterProducts(prods);
-    filtered.forEach(prod => console.log(prod.productName));
     filtered = filtered.map(prod => prod.productName.charCodeAt(0));
     let biggest = 0;
 
@@ -192,7 +191,7 @@ export default function App() {
     }
 
 
-    return filteredProducts.sort(alphabetCompare);
+    return filteredProducts.sort((a, b) => alphabetCompare(a.productName, b.productName));
   }
 
   /**
