@@ -2,7 +2,7 @@ import { useState, useEffect} from 'react';
 import './App.css';
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
-import ProductTile from './components/ProductTile.jsx'
+import ProductGrid from './components/ProductGrid.jsx'
 import SocialBar from './components/SocialBar.jsx'
 
 export default function App() {
@@ -99,7 +99,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    setFilteredProducts(filterProducts);
+    setFilteredProducts(filterProducts());
   }, [categorySelected, searchText]);
 
 
@@ -216,9 +216,8 @@ export default function App() {
         <input type="text" placeholder="Search for products" className="searchFilter" onChange={updateFilters}></input>
       </section>
 
-      {/* TODO: Isaiah add some conditional rendering here so when there are no products something gets displayed */}
       <section className="products">
-        {filteredProducts.map(prod => <ProductTile product={prod} key={prod.productID}></ProductTile>)}
+        <ProductGrid prods={filteredProducts}></ProductGrid>
       </section>
 
       <SocialBar />  {/* TODO: Isaiah style this properly because right now its just a column, it returns a section that has a class name you could use */}
