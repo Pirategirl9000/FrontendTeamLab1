@@ -25,6 +25,19 @@
 \listoffigures    % Add a link to all our figures
 \newpage
 
+\section{Project Proposal}
+The application we are creating is called GenStore. GenStore (short for generic store) is a mockup of an eCommerce site like Amazon or Etsy. GenStore is designed for any user whether they be someone looking to buy something or a company looking to sell their products to a mass market. The site manages information about products including but not limited to: product name, price, categories, seller, and many more. The site will display products and allow the user to filter or search for a desired product. The site will also allow users to update, delete, or create new product listings which will update in realtime.
+
+\subsection{Team Jobs}
+\subsubsection{Violet}
+Violet was in charge of creating the filtering and searching functions. She also created much of the doucmentation including: this document, state Management Document, Component Heirarchy Diagram, and the README. Violet also served as the group leader delegating tasks among team members and herself and keeping people on track. Violet created the product grid which links together the filtering features with Brayden's product tiles. Violet wrote many test cases for the code and the function that runs those tests. Violet also created the social bars and tiles.
+\subsubsection{Isaiah}
+Isaiah was in charge of web design and had the final say in how the page looked. Isaiah was primarily in charge of the CSS but was also responsible for the creation of static elements like the header and footer for the site. He created the interface sketch and built the site based off that plan.
+\subsubsection{Brayden}
+Brayden was in charge of creating the product tiles and CRUD functionality. Brayden also wrote the psuedocode for the CRUD operations which is present in this document.
+\subsubsection{Jarrod}
+Jarrod was in charge of the data for the application. Jarrod created the products in the JSON file and made sure they were pulled in properly. Jarrod structured the JSON file in a preplanned format so that other people knew what properties to expect.
+
 \section{State Management - Violet}
 \subsection{Products}
 The products state is the central state of the program. Products is stored in App.jsx and contains all of the products for displaying.
@@ -83,15 +96,6 @@ Information about the different test cases is outlined in a later section.
 \subsubsection{Interface Design}
 
 
-\section{Team Jobs}
-\subsection{Violet}
-Violet was in charge of creating the filtering and searching functions. She also created much of the doucmentation including: this document, state Management Document, Component Heirarchy Diagram, and the README. Violet also served as the group leader delegating tasks among team members and herself and keeping people on track. Violet created the product grid which links together the filtering features with Brayden's product tiles. Violet wrote many test cases for the code and the function that runs those tests. Violet also created the social bars and tiles.
-\subsection{Isaiah}
-Isaiah was in charge of web design and had the final say in how the page looked. Isaiah was primarily in charge of the CSS but was also responsible for the creation of static elements like the header and footer for the site. He created the interface sketch and built the site based off that plan.
-\subsection{Brayden}
-Brayden was in charge of creating the product tiles and CRUD functionality. Brayden also wrote the psuedocode for the CRUD operations which is present in this document.
-\subsection{Jarrod}
-Jarrod was in charge of the data for the application. Jarrod created the products in the JSON file and made sure they were pulled in properly. Jarrod structured the JSON file in a preplanned format so that other people knew what properties to expect.
 
 \section{Testing}
 Most of the testing for this program was done via the test() function in App.jsx. The test function gets run on mount via a useEffect(), this is to prevent it running multiple times. Many functions had to be redesigned in ways that would allow them to run without the state variables. State variables can be used for testing but they cannot be set using their setState function. The setState function works lazily in that it will only change state on next render. Seeing as the useEffect with an empty dependency array only runs on first mount, when the component is first being rendered these setStates will never work withing the context of the test function. State variables can be used but they must be set directly rather than via the setState function provided by useState(). Typically you should avoid this as the purpose of useState is to create variables who can trigger rerenders of dependencies but since the test function is based on assertion tests and isn't concerned with rendering this is alright. Additionally the products fetching function had to be created as the test function must be able to pull in the products to run its tests. To trigger testing the TESTING\_ENV variable must be set to true. This is not an environment variable unlike its name may suggest, instead it sits in the code directly and must be edited by the programmer to enable or disable it.
