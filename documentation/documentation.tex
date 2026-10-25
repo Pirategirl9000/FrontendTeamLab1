@@ -49,6 +49,22 @@ I wasn't happy that I had to move the logic back to App since I know it will mak
 \subsubsection{Product Grid}
 The product grid was originally designed to be it's own component but this was later changed. I realized that the product grid did not have any unique functions are complex code so it didn't need to be its own component. All the product grid was responsible for was being a parent element for all the product tiles. The product grid was not a reused component so it had no place as a react component. Instead the product grid became a section element that stored the product tiles. The product tile class was used by Brayden and my job was to ensure his component was called and given the right information. To do this I simply mapped each of the filtered products to a ProductTile component inside the products section (product grid).
 
+\subsubsection{Testing}
+I was in charge of writing most of the testing code. I was not initially going to make robust test cases but I realized as I was testing that simple checks here and there were not sufficient and we needed a stream-lined was to do this. I did this by writing a test() function inside App.jsx that would test different parts of our code. Within this function there is a arrow function called fAssert() which is used to speed up assertion checks. It takes in three parameters: value, expected, msg. Value is the value you want to do the assertion check on and is the only required parameter. This is the value you want to compare to expected to see if it matches. Expected is the value you expect to get, if the value does not match expected there is an error that gets logged in the console. Expected has a default value of true meaning you can pass a conditional to value to quickly do an assertion check. The final parameter, msg, outputs a unique message when assertion fails. This msg will follow the text `Assertion Fail: '.
+
+The fAssert() function was originally called fassert since it would flushSync than assert. Flushing the sync is used to force a rerender meaning you will get the most recent state variables. Flushing sync was recommended by the React documentation for immediately getting an updated state. This did not work however since the code only runs on first render (mounting) so flushing the sync doesn't do anything. The solution was to instead directly set the state variables skipping past the state setting function. This is used in this case since we don't need a rerender we just need to update the value of the states that way it can be used internally for the assertion checks. Despite flushing being removed from the function I kept the name fAssert incidentally after doubling back on my code several times and just decided to keep the name. Below is the code for the fAssert() function.
+
+\begin{lstlisting}
+const fAssert = (value, expected=true, msg="Assertion test failed") => {
+    if (value !== expected) console.error("Assertion Fail: " + msg);
+}
+\end{lstlisting}
+
+
+The test() function is called once on mount using an effect. This effect is only triggered if the variable TESTING\_ENV is set to true otherwise testing will not occur. A few functions were redesigned during creation of test cases to allow them to be used on first mount.
+
+Information about the different test cases is outlined in a later section.
+
 
 \subsection{Brayden}
 \subsubsection{CRUD Implementation}
