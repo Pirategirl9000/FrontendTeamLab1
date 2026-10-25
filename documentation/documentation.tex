@@ -30,11 +30,11 @@ The application we are creating is called GenStore. GenStore (short for generic 
 
 \subsection{Team Jobs}
 \subsubsection{Violet}
-Violet was in charge of creating the filtering and searching functions. She also created much of the doucmentation including: this document, state Management Document, Component Heirarchy Diagram, and the README. Violet also served as the group leader delegating tasks among team members and herself and keeping people on track. Violet created the product grid which links together the filtering features with Brayden's product tiles. Violet wrote many test cases for the code and the function that runs those tests. Violet also created the social bars and tiles.
+Violet was in charge of creating the filtering and searching functions. She also created much of the doucmentation including: this document, state Management Document, Component Heirarchy Diagram, and the README. Violet also served as the group leader delegating tasks among team members and herself and keeping people on track. Violet created the product grid which links together the filtering features with Brayden's product tiles. Violet wrote many test cases for the code and the function that runs those tests. Violet also created the social bars and tiles. Violet created the psuedocode for the CRUD operations which was implemented by Brayden.
 \subsubsection{Isaiah}
 Isaiah was in charge of web design and had the final say in how the page looked. Isaiah was primarily in charge of the CSS but was also responsible for the creation of static elements like the header and footer for the site. He created the interface sketch and built the site based off that plan.
 \subsubsection{Brayden}
-Brayden was in charge of creating the product tiles and CRUD functionality. Brayden also wrote the psuedocode for the CRUD operations which is present in this document.
+Brayden was in charge of creating the product tiles and CRUD functionality.
 \subsubsection{Jarrod}
 Jarrod was in charge of the data for the application. Jarrod created the products in the JSON file and made sure they were pulled in properly. Jarrod structured the JSON file in a preplanned format so that other people knew what properties to expect.
 
@@ -48,10 +48,35 @@ Search filter stores the current text search query. When the input for the searc
 \subsection{Select Filter}
 The Select filter acts very similar to search filtering but provides a more accessible interface for filtering. Rather than using a text query to filter the user just clicks on an option in a dropdown box of categories for product. When the state of the dropdown changes the select filter does too triggering a rerender of the product tiles. This filter, like searchFilter, is stored in App.jsx.
 
-\section{CRUD Psuedocode - Brayden}
-% Place psuedocode into verbatim environment
+\section{CRUD Psuedocode - Violet}
 \begin{verbatim}
+PRODUCTS = STATE()
+SELECTEDPRODUCTS = STATE()
 
+READ:
+    FOR PRODUCT IN FILTERED-PRODUCTS:
+        CREATE PRODUCT-TILE
+
+ON PRODUCT TILE CLICK
+    SELECTEDPRODUCTS += PRODUCT-ID
+
+CRUD MENU:
+    DROPDOWN MENU - SELECT OPTION
+        CREATE
+        UPDATE - SELECT 
+        DELETE
+    PRODUCT INFO SECTION
+        NAME
+        CATEGORIES (COMMA DELIMITED)
+        SELLER
+        PRICE
+        DESCRIPTION
+        AVAILABLE - YES/NO
+    SUBMIT BUTTON
+        CREATE: PRODUCTS += NEW-PRODUCT
+        UPDATE: PRODUCT[ID] = UPDATED-PRODUCT
+        DELETE: PRODUCTS -= PRODUCT[ID]
+        CLEAR SELECTED
 \end{verbatim}
 
 \section{Developer Log}

@@ -13,9 +13,9 @@ Before programming, each team must submit a brief proposal explaining:
 5.	What can users create, view, update, and delete?
     1.	Users can post their own products, view other user’s products, update products, remove a product
 6.	What part will each team member play in this development lifecycle?
-    Violet:  Filtering and search bars, product grid, Component Hierarchy Diagram, State Management Plan, Test Cases, Socials Bar, General Documentation, README
+    Violet:  Filtering and search bars, product grid, Component Hierarchy Diagram, State Management Plan, Test Cases, Socials Bar, General Documentation, README, CRUD Psuedocode
     Jarrod:  JSON product creation, some function to pull in the data (useEffect + fetch)
-    Brayden: Product Tile creation and design, CRUD psuedocode and implementation
+    Brayden: Product Tile creation and design, CRUD implementation
     Isaiah:  General structure of page, Interface Sketch (Sketch out the interface design either on paper or in a graphics program and email it to me vifren01@wsc.edu)
 
 Teams must maintain a brief development log describing
