@@ -6,26 +6,78 @@ import Footer from './components/Footer.jsx'
 import ProductTile from './components/ProductTile.jsx'
 
 export default function App() {
+  const TESTING_ENV = true;
+  let [products, setProducts] = useState([]);
+  
+  // Filtering stuff
+  let [filteredProducts, setFilteredProducts] = useState([]); 
+  let [searchText, setSearchText] = useState("");
+  let [categorySelected, setCategorySelected] = useState("All");
+
+  /**
+   * Fetches the products from the JSON file
+   * @returns The products fetched and formatted
+   */
+  async function fetchProducts() {
+    const response = await fetch("/products.json");
+
+    if (!response.ok) throw new Error("Failed to fetch products");
+
+    const json = await response.json();
+
+    return json.map(prod => ({
+      ...prod,
+      productCategories: prod.productCategories.map(cat => cat.toLowerCase())
+    })
+  );
+  }
+
   /**
    * Runs test cases
    */
-  function test() {
-    const fAssert = (value, expected, msg="Assertion test failed") => {
-      flushSync();  // Grab latest state
+  async function test() {
+    const fAssert = (value, expected=true, msg="Assertion test failed") => {
       if (value !== expected) console.error("Assertion Fail: " + msg);
     }
+    
+    const prods = await fetchProducts();
+    let filtered;
 
-    setSearchText("");
-    setCategorySelected("NOMATCH");  //Categories are never lowercase so should return nothing
-    fAssert(filteredProducts.length, 0, "Returned products for invalid category filter");
+    fAssert(prods.length > 0, true,"Products did not pull in correctly");
 
-    setCategorySelected("all");
-    setSearchText("");
-    fAssert(filteredProducts, products, "Did not pass check for no-filter");
+    // CHECK FOR NO CATEGORY MATCH
+    searchText = "";
+    categorySelected = "˫˫˫˫˫˫˫˫";  // Shouldn't be any categories for this
+    filtered = filterProducts(prods);
+    fAssert(filtered.length, 0, "Returned products for invalid category filter");
 
-    setSearchText("˫˫˫˫˫˫˫˫");  // Such an obscure character combo no one would ever have it ~ Ideally we would disallow it
-    setCategorySelected("all");
-    fAssert(filteredProducts.length, 0, "Returned products for invalid search filter");
+    // CHECK FOR NO FILTERING
+    categorySelected = "all";
+    searchText = "";
+    filtered = filterProducts(prods);
+    fAssert(filtered.length, prods.length, "Did not pass check for no-filter");
+
+    // CHECK FOR NO SEARCH MATCH
+    searchText = "˫˫˫˫˫˫˫˫";  // Such an obscure character combo no one would ever have it ~ Ideally we would disallow it
+    categorySelected = "all";
+    filtered = filterProducts(prods);
+    fAssert(filtered.length, 0, "Returned products for invalid search filter");
+
+    // CHECK ALPHABETICAL
+    categorySelected = "all";
+    searchText = "";
+    filtered = filterProducts(prods);
+    filtered.forEach(prod => console.log(prod.productName));
+    filtered = filtered.map(prod => prod.productName.charCodeAt(0));
+    let biggest = 0;
+
+    for (const cc of filtered) {
+      fAssert(cc >= biggest, true, "Light check on alphabetic order failed");
+      biggest = cc;
+    }
+
+
+
 
 
 
@@ -34,50 +86,26 @@ export default function App() {
 
 
     // Reset everything
-    setRepullProds(old => ++old);  // Increment it to trigger a resetting of the products array to its original state
-    setSearchText("");
-    setCategorySelected("all");
+    searchText = "";
+    categorySelected = "all";
   }
-
-  // TESTING CODE
-  useEffect(() => {queueMicrotask(()=>test())}, []);
-
-
-  const [products, setProducts] = useState([]);
-  
-  // Filtering stuff
-  const [filteredProducts, setFilteredProducts] = useState([]); 
-  const [searchText, setSearchText] = useState("");
-  const [categorySelected, setCategorySelected] = useState("All");
-
-  // Testing state
-  const [repullProds, setRepullProds] = useState(0);  // Increment this to trigger another fetch to the products.json - use it for testing
 
   // Pull in the products from the json and format them
   useEffect(() => {
-    fetch('/products.json')
-      .then(res => {
-        if (!res.ok) throw new Error('Network response was not ok');
-
-        return res.json();
-      })
-      .then(data => {
-        // lowercase all categories for filtering
-        const lowercasedData = data.map(prod => ({
-          ...prod,
-          productCategories: prod.productCategories.map(cat => cat.toLowerCase())
-        }));
-
-        setProducts(lowercasedData); // set the products state with the lowercased data
-        setFilteredProducts(lowercasedData); // set the filtered products state with the lowercased data
+    fetchProducts()
+      .then(result => {
+        setProducts(result);
+        setFilteredProducts(result);
       })
       .catch(error => console.error('Error fetching products:', error));
-  }, [repullProds]);
+  }, []);
 
   useEffect(() => {
     setFilteredProducts(filterProducts);
   }, [categorySelected, searchText]);
 
+
+  if (TESTING_ENV) useEffect(() => {test()}, []);
 
   /**
    * Updates the state of the filters and then updates the filtered products triggering a rerender of the product grid
@@ -113,11 +141,11 @@ export default function App() {
 
   /**
    * Filters the products by the current filtering queries, alphabetizes the results, and returns the filtered products
-   * @param {Event} e The event that triggered this filtering to occur
+   * @param {Array<Object>} prods Products to use instead of the state products, used for testing
    * @returns {Array[Object]} an array of the products filtered and sorted
    */
-  function filterProducts(e) {
-    let filteredProducts = products;
+  function filterProducts(prods=null) {
+    let filteredProducts = (prods) ? prods : products;  // Grabs inputted products and will use those instead, for example when testing
     const searchQueries = searchText.toLowerCase().split('&');  // Allows multiple search queries
     const category = categorySelected.toLowerCase();
     const comparators = "<>=";
