@@ -165,5 +165,91 @@ for (const cc of filtered) {
 \end{lstlisting}
 
 \subsection{Debugging}
+\subsubsection{Filtering - Violet}
+Upon writing tests for the filtering many errors were found in the filtering code. The first error encountered was that the category select filter was not being applied. The problem was a simple one, the code wasn't storing the filtered array after category filtering. The Arrays.filter() method does not mutate the original array instead returning a new array with the filter applied. My mistake was not setting filteredProducts equal to this new value. The new code after the fix is listed below
+
+\begin{lstlisting}
+if (category !== "all") 
+filteredProducts = filteredProducts.filter(
+    prod => prod.productCategories.includes(category)
+);  
+// Filter by category dropdown, productCategories should already be lowercase
+\end{lstlisting}
+
+Further testing of the filtering code revealed another error in which the filtering was not using the most recent filters instead using the previous ones. This was a case of state not updating. As mentioned in the Testing section, state updates lazily waiting till next rerender to reflect that new state. This can cause issues for states that aren't used by components such as the filters. This could be fixed in many way including adding the filters somewhere in the component to force it to rerender on their change. Instead I just opted to add a useEffect with the filter states as dependencies. The new code had the inputs on the page update the state of the filters which in turn triggered the effect causing it to refilter the products with the most recent data. The updated code is below
+
+\begin{lstlisting}
+// Filtering stuff
+let [filteredProducts, setFilteredProducts] = useState([]); 
+let [searchText, setSearchText] = useState("");
+let [categorySelected, setCategorySelected] = useState("All");
+
+/**
+* Updates the state of the filters and then updates the filtered products triggering a rerender of the product grid
+* @param {Event} e The event that spurred this action 
+*/
+function updateFilters(e) {
+    switch (e.target.className) {
+        case "selectFilter":  // Category selection changed 
+        setCategorySelected(e.target.value);
+        break;
+        case "searchFilter":  // Search query changed
+        setSearchText(e.target.value);
+        break;
+    }
+}
+
+useEffect(() => {
+    setFilteredProducts(filterProducts);
+}, [categorySelected, searchText]);
+
+/**
+* Filters the products by the current filtering queries, alphabetizes the results, and returns the filtered products
+* @param {Array<Object>} prods Products to use instead of the state products, used for testing
+* @returns {Array[Object]} an array of the products filtered and sorted
+*/
+function filterProducts(prods=null) {
+    // FILTERING CODE OMMITTED
+    return filteredProducts.sort(
+        (a, b) => alphabetCompare(a.productName, b.productName)
+    );
+}
+
+\end{lstlisting}
+
+\subsubsection{Sorting - Violet}
+The filtering function performs and alphabetic sorting of the products by their name. This ensures the products are in order of their names ascending. The logic for this however did not work in initial testing. The error was that alphabetCompare, the function that tells Arrays.sort which item comes first, was being passed the product objects instead of the product names. This was a simple fix just needing to change it from passing the parameters a and b to passing a.productName and b.productName. The updated code is below
+
+\begin{lstlisting}
+/**
+* Compares two strings and returns a number indicating which comes first alphabetically (uses Array.prototype.sort predicate rules)
+* @param {String} a The first string
+* @param {String} b The second string
+*/
+const alphabetCompare = (a, b) => {
+    if (a === b) return 0;      // They are the same string so it doesn't matter which goes first
+
+    for (let i = 0; i < a.length && i < b.length; i++) {
+        if (a.charCodeAt(i) > b.charCodeAt(i)) return 1;          // b's letter comes first
+        else if (a.charCodeAt(i) < b.charCodeAt(i)) return -1;    // a's letter comes first
+    }
+
+    // They have the same characters up to some point meaning we assess string length
+    return (a.length > b.length) ? 1 : -1
+}
+
+/**
+* Filters the products by the current filtering queries, alphabetizes the results, and returns the filtered products
+* @param {Array<Object>} prods Products to use instead of the state products, used for testing
+* @returns {Array[Object]} an array of the products filtered and sorted
+*/
+function filterProducts(prods=null) {
+    // FILTERING CODE OMITTED
+    return filteredProducts.sort(
+        (a, b) => alphabetCompare(a.productName, b.productName)
+    );
+}
+
+\end{lstlisting}
 
 \end{document}
