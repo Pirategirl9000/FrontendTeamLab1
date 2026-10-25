@@ -5,6 +5,10 @@ import Footer from './components/Footer.jsx'
 import ProductGrid from './components/ProductGrid.jsx'
 import SocialBar from './components/SocialBar.jsx'
 
+/**
+ * Returns the app for this website
+ * @returns An app component containing all the content of the site
+ */
 export default function App() {
   const TESTING_ENV = true;  // True means we will run assertion tests before rendering
   let [products, setProducts] = useState([]);
