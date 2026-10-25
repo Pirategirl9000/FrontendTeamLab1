@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{indentfirst}
 \usepackage[indent=25pt]{parskip}
+\usepackage{listings}
 
 
 % Don't touch this bro, I'm the TeX girl not you
@@ -63,12 +64,106 @@ The product grid was originally designed to be it's own component but this was l
 
 \section{Team Jobs}
 \subsection{Violet}
-Violet was in charge of creating the filtering and searching functions. She also created much of the doucmentation including: this document, state Management Document, Component Heirarchy Diagram, and the README. Violet also served as the group leader delegating tasks among team members and herself and keeping people on track. Violet created the product grid which links together the filtering features with Brayden's product tiles. 
+Violet was in charge of creating the filtering and searching functions. She also created much of the doucmentation including: this document, state Management Document, Component Heirarchy Diagram, and the README. Violet also served as the group leader delegating tasks among team members and herself and keeping people on track. Violet created the product grid which links together the filtering features with Brayden's product tiles. Violet wrote many test cases for the code and the function that runs those tests.
 \subsection{Isaiah}
 Isaiah was in charge of web design and had the final say in how the page looked. Isaiah was primarily in charge of the CSS but was also responsible for the creation of static elements like the header and footer for the site. He created the interface sketch and built the site based off that plan.
 \subsection{Brayden}
 Brayden was in charge of creating the product tiles and CRUD functionality. Brayden also wrote the psuedocode for the CRUD operations which is present in this document.
 \subsection{Jarrod}
 Jarrod was in charge of the data for the application. Jarrod created the products in the JSON file and made sure they were pulled in properly. Jarrod structured the JSON file in a preplanned format so that other people knew what properties to expect.
+
+\section{Testing}
+Most of the testing for this program was done via the test() function in App.jsx. The test function gets run on mount via a useEffect(), this is to prevent it running multiple times. Many functions had to be redesigned in ways that would allow them to run without the state variables. State variables can be used for testing but they cannot be set using their setState function. The setState function works lazily in that it will only change state on next render. Seeing as the useEffect with an empty dependency array only runs on first mount, when the component is first being rendered these setStates will never work withing the context of the test function. State variables can be used but they must be set directly rather than via the setState function provided by useState(). Typically you should avoid this as the purpose of useState is to create variables who can trigger rerenders of dependencies but since the test function is based on assertion tests and isn't concerned with rendering this is alright. Additionally the products fetching function had to be created as the test function must be able to pull in the products to run its tests. To trigger testing the TESTING\_ENV variable must be set to true. This is not an environment variable unlike its name may suggest, instead it sits in the code directly and must be edited by the programmer to enable or disable it.
+
+The different test cases utilize some shared variables and functions listed below
+\begin{lstlisting}[caption=Persistent variables of test()]
+const fAssert = (value, expected=true, msg="Assertion test failed") => {
+    if (value !== expected) console.error("Assertion Fail: " + msg);
+}
+
+const prods = await fetchProducts();
+let filtered;
+\end{lstlisting}
+\subsection{Test Cases}
+This section will go over the various test cases conducted.
+\subsubsection{Fetching Products}
+A test case was written to test the fetching of products from the JSON file. This test case required that the previous logic for fetching products be changed. Before the test case the fetching of the products was written once inside a useEffect, this works but it isn't reusable. Since state doesn't change until the next render we can't rely on a useEffect to update the state with a setState like it previously had been. Instead the logic for fetching products was extracted into an async function. This allowed the logic of the useEffect to remain the same but instead of chaining the Promise returned by the fetch it instead just used one then clause to set the states and then catches any errors that might of been tossed by the function. The function now grabs the data from the JSON instead meaning it can be used in multiple places of the code. This allows the test() function to get a hold of the products before first render by calling the function. Using this we pull in the products from the JSON in our test() function and assign it to a variable. Then to run a basic test we check to see if the prods variable has a length greater than 0. This doesn't check that we got all the products or even the right ones but it checks that we got something. Checking if we got the right products would mean hard-coding the right values into the test function which creates tight coupling between products.json and the test() function which is undesirable and harms our ability to scale.
+
+\begin{lstlisting}[caption=fetchProducts() function]
+/**
+* Fetches the products from the JSON file
+* @returns The products fetched and formatted
+*/
+async function fetchProducts() {
+    const response = await fetch("/products.json");
+
+    if (!response.ok) throw new Error("Failed to fetch products");
+
+    const json = await response.json();
+
+    return json.map(prod => ({
+        ...prod,
+        productCategories: prod.productCategories.map(cat => cat.toLowerCase())
+    }));
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Test Case]
+const prods = await fetchProducts();
+fAssert(prods.length > 0, true,"Products did not pull in correctly");
+\end{lstlisting}
+
+\subsubsection{No Match Checks}
+Two test cases were written to check if the filtering would properly return no products when filtering for something with no matches. Both checks relied on an obscure character sequence that would be unlikely to be found in any part of the products. Ideally we would prevent these characters from being used but for now this obscurity should work fine. These characters are so obscure they cannot be plain typed into this document as they are not UTF-8 characters, in this document they will be referred to as `OBSCURECHARACTERS'
+
+The first of two checks was a category select check. By setting the categorySelected to the obscure sequence of characters then running filterProducts we will get the products filtered by that category. A successful test is one in which no products are returned
+
+\begin{lstlisting}
+// CHECK FOR NO CATEGORY MATCH
+searchText = "";
+categorySelected = "OBSCURECHARACTERS";  // Shouldn't be any categories for this
+filtered = filterProducts(prods);
+fAssert(filtered.length, 0, "Returned products for invalid category filter");
+\end{lstlisting}
+
+The next check was the same idea but it was conducted on the search text instead of the category
+
+\begin{lstlisting}
+// CHECK FOR NO SEARCH MATCH
+searchText = "OBSCURECHARACTERS";  // Such an obscure character combo no one would ever have it ~ Ideally we would disallow it
+categorySelected = "all";
+filtered = filterProducts(prods);
+fAssert(filtered.length, 0, "Returned products for invalid search filter");
+\end{lstlisting}
+
+\subsubsection{No Filter Check}
+A test case was written to see if when no filters were applied the filterProducts() function would return all products. A successful test is one in which the products from the JSON file have the same length as the products after filtering. We cannot check for equality on this as filterProducts() also alphabetizes the products meaning they do not preserve order.
+
+\begin{lstlisting}
+// CHECK FOR NO FILTERING
+categorySelected = "all";
+searchText = "";
+filtered = filterProducts(prods);
+fAssert(filtered.length, prods.length, "Did not pass check for no-filter");
+\end{lstlisting}
+
+\subsubsection{Shallow Sort Validation}
+A test case was written to test whether filtered products were being alphabetized. This check is shallow and does not check beyond the first character or for string length concerns. This test has been deemed sufficient for most applications and a more in-depth test may be written later if necessary. The code maps each product in filtered to the character code of its first character. A for loop then goes through the character code array and ensures that every character code is greater than or equal to the preceding ones by tracking the previous biggest code. A successful test is one in which no character following another has a smaller character code.
+
+\begin{lstlisting}
+// CHECK ALPHABETICAL - LIGHT CHECK AND ONLY CHECKS FIRST LETTER
+categorySelected = "all";
+searchText = "";
+filtered = filterProducts(prods);
+filtered = filtered.map(prod => prod.productName.charCodeAt(0));
+let biggest = 0;
+
+for (const cc of filtered) {
+    fAssert(cc >= biggest, true, "Light check on alphabetic order failed");
+    biggest = cc;
+}
+\end{lstlisting}
+
+\subsection{Debugging}
 
 \end{document}
