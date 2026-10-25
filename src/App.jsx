@@ -6,7 +6,7 @@ import ProductTile from './components/ProductTile.jsx'
 import SocialBar from './components/SocialBar.jsx'
 
 export default function App() {
-  const TESTING_ENV = true;
+  const TESTING_ENV = true;  // True means we will run assertion tests before rendering
   let [products, setProducts] = useState([]);
   
   // Filtering stuff
@@ -28,12 +28,11 @@ export default function App() {
     return json.map(prod => ({
       ...prod,
       productCategories: prod.productCategories.map(cat => cat.toLowerCase())
-    })
-  );
+    }));
   }
 
   /**
-   * Runs test cases
+   * If TESTING_ENV is set to true this function will run on mount and perform several assertion tests against expected values
    */
   async function test() {
     const fAssert = (value, expected=true, msg="Assertion test failed") => {
@@ -209,9 +208,7 @@ export default function App() {
   return (
     <>
       <Header />
-      {/* TODO: Add filter clearing button */}
       <section className="filterForm">
-        {/* DO NOT CHANGE THE CLASS NAME ON THE FILTER INPUTS THEY ARE LINKED TO FILTERING LOGIC */}
         <select className="selectFilter" onChange={updateFilters}>
           <option value="All">All</option>
           {getUniqueCategories(products).map(cat => <option key={cat} value={cat}>{cat}</option>)}
@@ -224,7 +221,7 @@ export default function App() {
         {filteredProducts.map(prod => <ProductTile product={prod} key={prod.productID}></ProductTile>)}
       </section>
 
-      <SocialBar />
+      <SocialBar />  {/* TODO: Isaiah style this properly because right now its just a column, it returns a section that has a class name you could use */}
       <Footer />
     </>
   )
