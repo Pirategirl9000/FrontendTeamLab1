@@ -35,11 +35,6 @@ CRUD	Create, Read, Update, and Delete records
     * Deleting a listing
 Every CRUD operation must visibly update the React interface without reloading the page.
 
-
-Step 2 — Design the Algorithms
-Write pseudocode for adding, editing, deleting, searching, and filtering records.
-
-
 Part 4 — Team Responsibilities
 Every team member must be able to explain at least one component, one state variable, and one event handling function during the demonstration.
 Each team must implement at least one additional feature that makes its application more interesting.
