@@ -1,5 +1,7 @@
-// Isaiah this is for you
-
+/**
+ * Returns a header component for use across the site
+ * @returns A header component for the site
+ */
 export default function Header() {
     return (
         <header>
