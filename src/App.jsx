@@ -202,7 +202,8 @@ export default function App() {
     return products
       .map(prod => prod.productCategories)                            // Grab each of the products categories (map does not mutate)
       .flat()                                                         // Flatten the array of categories into a 1D array ~ We can't use flatmap since that only flattens one level :(
-      .filter((val, index, arr) => arr.indexOf(val) === index);       // Remove duplicates and return it
+      .filter((val, index, arr) => arr.indexOf(val) === index)        // Remove duplicates and return it
+      .slice(0, 5);                                                   // Pull off the first five unique categories - or maybe it's 4, doesn't really matter
   }
 
   return (
