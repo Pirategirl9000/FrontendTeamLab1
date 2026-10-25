@@ -27,9 +27,6 @@ Concept	Minimum requirement
 Event handling	Buttons, inputs, and other user interactions
     * CRUD listing form
     * Filter Bars - Done
-Conditional rendering	Display different content based on application state
-    * Number of products after filtering / Displaying span saying when there are no products matching
-    * Not available add icon or grey out
 Forms	Controlled inputs with validation
     * Inputting listings
 CRUD	Create, Read, Update, and Delete records
