@@ -1,5 +1,5 @@
 \documentclass{article}[12pt]
-\usepackage{times}
+\usepackage{newtxtext}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -49,35 +49,38 @@ Search filter stores the current text search query. When the input for the searc
 The Select filter acts very similar to search filtering but provides a more accessible interface for filtering. Rather than using a text query to filter the user just clicks on an option in a dropdown box of categories for product. When the state of the dropdown changes the select filter does too triggering a rerender of the product tiles. This filter, like searchFilter, is stored in App.jsx.
 
 \section{CRUD Psuedocode - Violet}
-\begin{verbatim}
-PRODUCTS = STATE()
-SELECTEDPRODUCTS = STATE()
+\begin{minipage}{12cm}  % Maybe there is a better way but I'm still pretty new to TeX
+\ttfamily
+\setlength{\parindent}{20pt}
+\noindent PRODUCTS = STATE() \\
+\noindent SELECTEDPRODUCTS = STATE() \\
 
-READ:
-    FOR PRODUCT IN FILTERED-PRODUCTS:
-        CREATE PRODUCT-TILE
+\noindent READ: \\
+    \indent FOR PRODUCT IN FILTERED-PRODUCTS: \\
+    \indent \indent CREATE PRODUCT-TILE \\
 
-ON PRODUCT TILE CLICK
-    SELECTEDPRODUCTS += PRODUCT-ID
+\noindent ON PRODUCT TILE CLICK \\
+    \indent SELECTEDPRODUCTS += PRODUCTID \\
 
-CRUD MENU:
-    DROPDOWN MENU - SELECT OPTION
-        CREATE
-        UPDATE - SELECT 
-        DELETE
-    PRODUCT INFO SECTION
-        NAME
-        CATEGORIES (COMMA DELIMITED)
-        SELLER
-        PRICE
-        DESCRIPTION
-        AVAILABLE - YES/NO
-    SUBMIT BUTTON
-        CREATE: PRODUCTS += NEW-PRODUCT
-        UPDATE: PRODUCT[ID] = UPDATED-PRODUCT
-        DELETE: PRODUCTS -= PRODUCT[ID]
-        CLEAR SELECTED
-\end{verbatim}
+\noindent CRUD MENU: \\
+    \indent DROPDOWN MENU - SELECT OPTION \\
+        \indent \indent CREATE \\
+        \indent \indent UPDATE \\
+        \indent \indent DELETE \\
+    \indent PRODUCT INFO SECTION \\
+        \indent \indent NAME \\
+        \indent \indent CATEGORIES (COMMA DELIMITED) \\
+        \indent \indent SELLER \\
+        \indent \indent PRICE \\
+        \indent \indent DESCRIPTION \\
+        \indent \indent AVAILABLE - YES/NO \\
+    \indent SUBMIT BUTTON: ON-CLICK \\
+        \indent \indent CREATE: PRODUCTS += NEW-PRODUCT $\iff$ ALL FIELDS ARE POPULATED \\  % This is the whole reason this section looks so bad, I just wanted to use \iff in here w/ monospace
+        \indent \indent UPDATE: PRODUCT[ID] = UPDATED-PRODUCT \\
+        \indent \indent DELETE: PRODUCTS -= PRODUCT[ID] $\iff$ PRODUCT IS SELECTED \\
+        \indent \indent CLEAR SELECTED \\
+\end{minipage}
+
 
 \section{Developer Log}
 \subsection{Violet}
