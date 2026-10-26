@@ -1,5 +1,8 @@
 Add your name and what you did as you go - I will remove them and add them to the documentation as I go
 
+Jarrod
+* Added products to the Products.json file
+* Added a useEffect for pulling in the products from the products.json
 
 Dev Log
 * Fill out the dev log as you implement new features, refer to mine in documentation/documentation.pdf to see how
