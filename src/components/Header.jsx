@@ -1,3 +1,6 @@
+import '../Styles/Header.css';
+
+
 /**
  * Returns a header component for use across the site
  * @returns A header component for the site

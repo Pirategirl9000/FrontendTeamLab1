@@ -1,5 +1,5 @@
-import { useState, useEffect} from 'react';
-import './App.css';
+import { useState, useEffect } from 'react';
+import './Styles/App.css';
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import ProductGrid from './components/ProductGrid.jsx'
@@ -12,9 +12,9 @@ import SocialBar from './components/SocialBar.jsx'
 export default function App() {
   const TESTING_ENV = true;  // True means we will run assertion tests before rendering
   let [products, setProducts] = useState([]);
-  
+
   // Filtering stuff
-  let [filteredProducts, setFilteredProducts] = useState([]); 
+  let [filteredProducts, setFilteredProducts] = useState([]);
   let [searchText, setSearchText] = useState("");
   let [categorySelected, setCategorySelected] = useState("All");
 
@@ -39,14 +39,14 @@ export default function App() {
    * If TESTING_ENV is set to true this function will run on mount and perform several assertion tests against expected values
    */
   async function test() {
-    const fAssert = (value, expected=true, msg="Assertion test failed") => {
+    const fAssert = (value, expected = true, msg = "Assertion test failed") => {
       if (value !== expected) console.error("Assertion Fail: " + msg);
     }
-    
+
     const prods = await fetchProducts();
     let filtered;
 
-    fAssert(prods.length > 0, true,"Products did not pull in correctly");
+    fAssert(prods.length > 0, true, "Products did not pull in correctly");
 
     // CHECK FOR NO CATEGORY MATCH
     searchText = "";
@@ -107,7 +107,7 @@ export default function App() {
   }, [categorySelected, searchText]);
 
 
-  if (TESTING_ENV) useEffect(() => {test()}, []);
+  if (TESTING_ENV) useEffect(() => { test() }, []);
 
   /**
    * Updates the state of the filters and then updates the filtered products triggering a rerender of the product grid
@@ -146,7 +146,7 @@ export default function App() {
    * @param {Array<Object>} prods Products to use instead of the state products, used for testing
    * @returns {Array[Object]} an array of the products filtered and sorted
    */
-  function filterProducts(prods=null) {
+  function filterProducts(prods = null) {
     let filteredProducts = (prods) ? prods : products;  // Grabs inputted products and will use those instead, for example when testing
     const searchQueries = searchText.toLowerCase().split('&');  // Allows multiple search queries
     const category = categorySelected.toLowerCase();
