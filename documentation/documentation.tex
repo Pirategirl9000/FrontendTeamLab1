@@ -123,6 +123,9 @@ Information about the different test cases is outlined in a later section.
 
 \subsection{Jarrod}
 \subsubsection{JSON File}
+I was in charge of creating the JSON file and fetching the data from the JSON file. I went with a structure of each product having a unique productID followed by a Product Name, Price, Seller, Category, Description and Availability. These would all be relevant when displaying the products on tiles.
+
+For fetching that data from the JSON file I decided on using a useEffect for pulling in the products. It preserves the raw dataset, keeping the full products list intact. Also ensures that you do not lose any items when filtering, allowing users to clear or change their search without re-fetching from the file. Doing it this way also separates lifecycles for better performance ensuring that the filtering logic only runs when the search text or selected category actually changes, rather than executing on every single component re-render.
 
 
 \subsection{Isaiah}
