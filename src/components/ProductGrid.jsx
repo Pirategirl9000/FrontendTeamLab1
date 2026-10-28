@@ -5,10 +5,11 @@ import ProductTile from './ProductTile';
  * @param {Array<Object>} prods An array of product objects for the ProductTile's 
  * @returns 
  */
+
 export default function ProductGrid({prods, selectedIDs = [], onSelect}) {
     return (
         <section className="products">
-            {(prods.length) ? prods.map(prod => <ProductTile product={prod} key={prod.productID}></ProductTile>) : <span>No products found</span>}
+            {(prods.length) ? prods.map(prod => <ProductTile selectSetter={selectSetter} product={prod} key={prod.productID}></ProductTile>) : <span>No products found</span>}
         </section>
     );
 }
