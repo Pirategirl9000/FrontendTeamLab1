@@ -1,7 +1,7 @@
 // Brayden this is yours
 import '../Styles/ProductTile.css';
 
-export default function ProductTile( {product, selectedProduct, selectSetter}) {
+export default function ProductTile( {product, selectSetter}) {
     const ID = product.productID;
     const isAvailable = product.productAvailable
 

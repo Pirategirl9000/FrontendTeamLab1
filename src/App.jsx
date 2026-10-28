@@ -268,7 +268,7 @@ export default function App() {
       </section>
 
       <section className="products">
-        <ProductGrid selected={selectedProduct} selectSetter={setSelectedProduct} prods={filteredProducts}></ProductGrid>
+        <ProductGrid selectSetter={setSelectedProduct} prods={filteredProducts}></ProductGrid>
       </section>
 
       <Footer />
