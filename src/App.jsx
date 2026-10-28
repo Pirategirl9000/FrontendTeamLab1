@@ -217,7 +217,7 @@ export default function App() {
     <>
       <Header />
       <section className="filterForm">
-        <h3>{editingID !== null ? 'Add Product' : 'Edit Product'}</h3>
+        <h3></h3>
         <form onSubmit = {handleFormSubmit}>
           <input type="text" name="productName" placeholder="Product Name" value={formData.productName} onChange={handleInputChange}></input>
           <input type="text" name="productDescription" placeholder="Product Description" value={formData.productDescription} onChange={handleInputChange}></input>
@@ -229,13 +229,13 @@ export default function App() {
           <textarea name="productDescription" placeholder="Product Description" value={formData.productDescription} onChange={handleInputChange}></textarea>
           <div>
             <button>
-                {editingID !== null ? 'Add Product' : 'Edit Product'}
+                
             </button>
-            {editingID !== null && (
+            
               <button>
-                {editingID !== null ? 'Cancel' : 'Delete Product'}
+               
               </button>
-            )}
+            
           </div>
         </form>
     </section>
