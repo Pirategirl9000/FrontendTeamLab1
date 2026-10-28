@@ -31,7 +31,7 @@
     "productAvailable": true 
 },
 { "productID": 5, 
-    "productName": "Example Product", 
+    "productName": "North Face T-Shirt", 
     "productPrice": 65.00, 
     "productSeller": "The North Face", 
     "productCategories": ["Clothing"], 
