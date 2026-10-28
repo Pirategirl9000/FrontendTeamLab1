@@ -45,14 +45,15 @@ export default function App() {
    * CRUD Functions
    */
 
+//function for creating product
   function createProduct(newProduct) {
     setProducts(prevProducts => [...prevProducts, newProduct]);
   }
-
+// function for updatin product
   function updateProduct(id, updatedProduct) {
     setProducts(prevProducts => prevProducts.map(prod => prod.id === id ? { ...prod, ...updatedProduct } : prod));
   }
-
+// function for deleting product
   function deleteProduct(id) {
     setProducts(prevProducts => prevProducts.filter(prod => prod.id !== id));
   }
@@ -78,23 +79,25 @@ export default function App() {
 
   function handleFormSubmit(e) {
     e.preventDefault();
+    //handle deletion
     if (mode === "Delete") {
       if (selectedProducts.length === 0) {
         alert("Click on at least one product to select it for deletion.");
         return;
       }
+      //delete each selected product and clear state
       selectedProducts.forEach(id => deleteProduct(id));
       setSelectedProducts([]);
       return;
     }
 
-    const form = e.target;
-    const data = new FormData(form);
-    const productName = data.get("productName").trim();
-    const productDescription = data.get("productDescription").trim();
-    const productPrice = data.get("productPrice");
-    const productSeller = data.get("productSeller").trim();
-    const productCategories = data.get("productCategories");
+    const form = e.target; // capture the form DOM element from the event target
+    const data = new FormData(form); // Form data to read inputs by their name attributes
+    const productName = data.get("productName").trim(); //gets the product name
+    const productDescription = data.get("productDescription").trim(); //gets the product description
+    const productPrice = data.get("productPrice"); //gets the product price
+    const productSeller = data.get("productSeller").trim(); // gets the seller name
+    const productCategories = data.get("productCategories"); // gets the category name
 
     if (!productName || !productDescription || productPrice === "" || !productSeller || !productCategories.trim()) {
       alert("Please fill in all required fields.");
