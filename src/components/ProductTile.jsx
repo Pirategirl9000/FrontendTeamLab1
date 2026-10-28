@@ -1,4 +1,5 @@
 // Brayden this is yours
+import '../Styles/ProductTile.css';
 
 export default function ProductTile( {product}) {
 
@@ -8,7 +9,7 @@ export default function ProductTile( {product}) {
         <article className="product-tile">
             <h2>
                 {product.productName}
-                <span class="category-label">Tags: {product.productCategories}</span>
+                <div className="category-label">Tags: {product.productCategories}</div>
             </h2>
             <h4>
                 <strong>Seller: </strong>
