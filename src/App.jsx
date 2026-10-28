@@ -18,7 +18,7 @@ export default function App() {
   let [searchText, setSearchText] = useState("");
   let [categorySelected, setCategorySelected] = useState("All");
 
-  const [EditingID, setEditingID] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(-1);
 
   /**
    * Fetches the products from the JSON file
@@ -94,6 +94,8 @@ export default function App() {
     searchText = "";
     categorySelected = "all";
   }
+
+  useEffect(() => {console.log(selectedProduct)}, [selectedProduct])
 
   // Pull in the products from the json and format them
   useEffect(() => {
@@ -213,20 +215,24 @@ export default function App() {
       .slice(0, 5);                                                   // Pull off the first five unique categories - or maybe it's 4, doesn't really matter
   }
 
+  function handleFormSubmit() {
+
+  }
+
   return (
     <>
       <Header />
       <section className="filterForm">
         <h3></h3>
         <form onSubmit={handleFormSubmit}>
-          <input type="text" name="productName" placeholder="Product Name" value={formData.productName} onChange={handleInputChange}></input>
-          <input type="text" name="productDescription" placeholder="Product Description" value={formData.productDescription} onChange={handleInputChange}></input>
-          <input type="number" name="productPrice" placeholder="Product Price" onChange={handleInputChange}></input>
-          <input type="text" name="productSeller" placeholder="Product Seller" onChange={handleInputChange}></input>
-          <input type="text" name="productCategories" placeholder="Product Categories (comma-separated)" onChange={handleInputChange}></input>
-          <input type="checkbox" name="productInStock" placeholder="Product In Stock" onChange={handleInputChange}></input>
+          <input type="text" name="productName" placeholder="Product Name"></input>
+          <input type="text" name="productDescription" placeholder="Product Description"></input>
+          <input type="number" name="productPrice" placeholder="Product Price"></input>
+          <input type="text" name="productSeller" placeholder="Product Seller"></input>
+          <input type="text" name="productCategories" placeholder="Product Categories (comma-separated)"></input>
+          <input type="checkbox" name="productInStock" placeholder="Product In Stock"></input>
 
-          <textarea name="productDescription" placeholder="Product Description" value={formData.productDescription} onChange={handleInputChange}></textarea>
+          <textarea name="productDescription" placeholder="Product Description"></textarea>
           <div>
             <button>
 
@@ -264,11 +270,7 @@ export default function App() {
       </section>
 
       <section className="products">
-        <ProductGrid prods={filteredProducts}></ProductGrid>
-      </section>
-
-      <section className="products">
-        <ProductGrid prods={filteredProducts}></ProductGrid>
+        <ProductGrid selectSetter={setSelectedProduct} prods={filteredProducts}></ProductGrid>
       </section>
 
       <Footer />
