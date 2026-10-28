@@ -18,9 +18,7 @@ export default function ProductTile( {product}) {
                 {product.productDescription}
             </p>
             <h3>
-                 new Intl.NumberFormat("en-US", { style: "currency": "USD" }).format(
-                    {product.productPrice},
-                );
+                 {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(product.productPrice)}
             </h3>
             <button>
                 Buy Now
