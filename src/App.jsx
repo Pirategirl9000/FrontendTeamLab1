@@ -18,6 +18,8 @@ export default function App() {
   let [searchText, setSearchText] = useState("");
   let [categorySelected, setCategorySelected] = useState("All");
 
+  const [EditingID, setEditingID] = useState(null);
+
   /**
    * Fetches the products from the JSON file
    * @returns The products fetched and formatted
@@ -29,7 +31,8 @@ export default function App() {
 
     const json = await response.json();
 
-    return json.map(prod => ({
+    return json.map((prod, index) => ({
+      id: prod.id || index + 1,  // If the product doesn't have an id we will assign it one based on its index in the array
       ...prod,
       productCategories: prod.productCategories.map(cat => cat.toLowerCase())
     }));
@@ -214,11 +217,54 @@ export default function App() {
     <>
       <Header />
       <section className="filterForm">
+        <h3>{editingID !== null ? 'Add Product' : 'Edit Product'}</h3>
+        <form onSubmit = {handleFormSubmit}>
+          <input type="text" name="productName" placeholder="Product Name" value={formData.productName} onChange={handleInputChange}></input>
+          <input type="text" name="productDescription" placeholder="Product Description" value={formData.productDescription} onChange={handleInputChange}></input>
+          <input type="number" name="productPrice" placeholder="Product Price" onChange={handleInputChange}></input>
+          <input type="text" name="productSeller" placeholder="Product Seller" onChange={handleInputChange}></input>
+          <input type="text" name="productCategories" placeholder="Product Categories (comma-separated)" onChange={handleInputChange}></input>
+          <input type="checkbox" name="productInStock" placeholder="Product In Stock" onChange={handleInputChange}></input>
+
+          <textarea name="productDescription" placeholder="Product Description" value={formData.productDescription} onChange={handleInputChange}></textarea>
+          <div>
+            <button>
+                {editingID !== null ? 'Add Product' : 'Edit Product'}
+            </button>
+            {editingID !== null && (
+              <button>
+                {editingID !== null ? 'Cancel' : 'Delete Product'}
+              </button>
+            )}
+          </div>
+        </form>
+    </section>
+
+    <section className="filterForm">
         <select className="selectFilter" onChange={updateFilters}>
           <option value="All">All</option>
           {getUniqueCategories(products).map(cat => <option key={cat} value={cat}>{cat}</option>)}
         </select>
         <input type="text" placeholder="Search for products" className="searchFilter" onChange={updateFilters}></input>
+      </section>
+
+      //CRUD delete and edit
+
+      <section>
+          <ul>
+            {filteredProducts.map(product => (
+              <li key={product.id}>
+                <div>
+                  <button onClick={() => handleEditProduct(product.id)}>Edit</button>
+                  <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                </div>
+              </li>
+            ))}
+          </ul>
+      </section>
+
+      <section className="products">
+        <ProductGrid prods={filteredProducts}></ProductGrid>
       </section>
 
       <section className="products">
