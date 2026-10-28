@@ -327,7 +327,7 @@ export default function App() {
               <input type="text" name="productCategories" placeholder="Product Categories" defaultValue={selectedProduct?.productCategories.join(', ') ?? ""}></input> {/*Product Category*/}
 
         <label>
-              <input type="checkbox" name="productAvailable" defaultChecked = {Boolean(selectedProduct?.productAvailable)}></input> {/*Product Availability as a */}
+              <input type="checkbox" name="productAvailable" defaultChecked = {Boolean(selectedProduct?.productAvailable)}></input> {/*Product Availability as a checkbox*/}
               Available
         </label>
           </>
