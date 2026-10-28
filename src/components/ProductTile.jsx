@@ -1,8 +1,8 @@
 // Brayden this is yours
 import '../Styles/ProductTile.css';
 
-export default function ProductTile( {product, selectSetter}) {
-
+export default function ProductTile( {product, selectedProduct, selectSetter}) {
+    const ID = product.productID;
     const isAvailable = product.productAvailable
 
     /**
@@ -10,26 +10,13 @@ export default function ProductTile( {product, selectSetter}) {
      * @param {Event} e The event sent by a product tile
      */
     function selectProduct(e) {
-        const ID = e.target.getAttribute("prodid");
-        console.log(ID);
-
-        selectSetter((prev) => {
-            if (prev !== -1)
-                document.querySelector(`.product-tile["prod-id=${prev}"]`).classList.remove("selected");  // Remove old selection
-            
-            if (e.target.classList.contains("selected")){
-                e.target.classList.remove("selected");
-                return -1;  // Nothing is selected
-            }
-
-            e.target.classList.add("selected");
-            return ID;
-        });
+        selectSetter(ID)
+        alert(`Product: ${product.productName} Selected`);  // Time crunch here so this looks like crap
     }
 
     if (isAvailable == false){
         return (
-            <article className="product-tile" prod-id={product.productID} onClick={selectProduct}>
+            <article className="product-tile" prodid={product.productID} onClick={selectProduct}>
                 <h2>
                     {product.productName}
                     <div className="category-label">Tags: {product.productCategories}</div>
@@ -48,7 +35,7 @@ export default function ProductTile( {product, selectSetter}) {
         );
     } else {
         return (
-            <article className="product-tile" prod-id={product.productID} onClick={selectProduct}>
+            <article className="product-tile" prodid={product.productID} onClick={selectProduct}>
                 <h2>
                     {product.productName}
                     <div className="category-label">Tags: {product.productCategories}</div>

@@ -95,8 +95,6 @@ export default function App() {
     categorySelected = "all";
   }
 
-  useEffect(() => {console.log(selectedProduct)}, [selectedProduct])
-
   // Pull in the products from the json and format them
   useEffect(() => {
     fetchProducts()
@@ -270,7 +268,7 @@ export default function App() {
       </section>
 
       <section className="products">
-        <ProductGrid selectSetter={setSelectedProduct} prods={filteredProducts}></ProductGrid>
+        <ProductGrid selected={selectedProduct} selectSetter={setSelectedProduct} prods={filteredProducts}></ProductGrid>
       </section>
 
       <Footer />
