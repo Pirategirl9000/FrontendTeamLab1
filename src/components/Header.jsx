@@ -1,4 +1,5 @@
 import '../Styles/Header.css';
+//import SocialBar from './components/SocialBar.jsx'
 
 
 /**
@@ -9,6 +10,7 @@ export default function Header() {
     return (
         <header>
             <h1>GenStore</h1>
+            {/* <SocialBar /> */}
         </header>
     );
 }

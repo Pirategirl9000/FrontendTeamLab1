@@ -1,0 +1,10 @@
+footer {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background-color: color-mix(in srgb, var(--bg) 95%, transparent);
+    margin-top: auto;
+}
+
+footer:hover {
+    background-color: color-mix(in srgb, var(--accent) 10%, var(--bg));
+}

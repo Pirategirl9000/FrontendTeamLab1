@@ -1,3 +1,11 @@
 header {
-    border: 2px solid black;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background-color: color-mix(in srgb, var(--bg) 95%, transparent);
+}
+
+header:hover {
+    background-color: color-mix(in srgb, var(--accent) 10%, var(--bg));
 }

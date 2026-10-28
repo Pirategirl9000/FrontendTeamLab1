@@ -3,7 +3,7 @@ import './Styles/App.css';
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import ProductGrid from './components/ProductGrid.jsx'
-import SocialBar from './components/SocialBar.jsx'
+
 
 /**
  * Returns the app for this website
@@ -218,7 +218,7 @@ export default function App() {
       <Header />
       <section className="filterForm">
         <h3></h3>
-        <form onSubmit = {handleFormSubmit}>
+        <form onSubmit={handleFormSubmit}>
           <input type="text" name="productName" placeholder="Product Name" value={formData.productName} onChange={handleInputChange}></input>
           <input type="text" name="productDescription" placeholder="Product Description" value={formData.productDescription} onChange={handleInputChange}></input>
           <input type="number" name="productPrice" placeholder="Product Price" onChange={handleInputChange}></input>
@@ -229,18 +229,18 @@ export default function App() {
           <textarea name="productDescription" placeholder="Product Description" value={formData.productDescription} onChange={handleInputChange}></textarea>
           <div>
             <button>
-                
+
             </button>
-            
-              <button>
-               
-              </button>
-            
+
+            <button>
+
+            </button>
+
           </div>
         </form>
-    </section>
+      </section>
 
-    <section className="filterForm">
+      <section className="filterForm">
         <select className="selectFilter" onChange={updateFilters}>
           <option value="All">All</option>
           {getUniqueCategories(products).map(cat => <option key={cat} value={cat}>{cat}</option>)}
@@ -251,16 +251,16 @@ export default function App() {
       //CRUD delete and edit
 
       <section>
-          <ul>
-            {filteredProducts.map(product => (
-              <li key={product.id}>
-                <div>
-                  <button onClick={() => handleEditProduct(product.id)}>Edit</button>
-                  <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <ul>
+          {filteredProducts.map(product => (
+            <li key={product.id}>
+              <div>
+                <button onClick={() => handleEditProduct(product.id)}>Edit</button>
+                <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="products">
@@ -271,7 +271,6 @@ export default function App() {
         <ProductGrid prods={filteredProducts}></ProductGrid>
       </section>
 
-      <SocialBar />  {/* TODO: Isaiah style this properly because right now its just a column, it returns a section that has a class name you could use */}
       <Footer />
     </>
   )
