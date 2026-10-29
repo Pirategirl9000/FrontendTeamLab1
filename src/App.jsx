@@ -103,9 +103,18 @@ export default function App() {
     categorySelected = "all";
     searchText = "test&test desc&==1&a&b&c"
     filtered = filterProducts(newProds);
-    console.log(newProds);
-    console.log(filtered);
     fAssert(filtered.length >= 1, true, "Could not find created products");
+
+    selectedProduct = newProds.length - 1;
+    e.target.productPrice.value = "2";
+    newProds = updateProduct(e);
+    searchText = "test&test desc&==2&a&b&c";
+    fAssert(filterProducts(newProds).length >= 1, true, "Updating product failed");
+
+    selectedProduct = newProds.length - 1;
+    newProds = deleteProduct(e);
+    console.log(newProds);
+    fAssert(newProds.length === prods.length, true, "Failed to delete product");  // Compare it to the length of the old test
 
 
 
