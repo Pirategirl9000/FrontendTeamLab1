@@ -29,6 +29,7 @@ export default function ProductTile( {product, selectSetter}) {
                         {product.productDescription}
                     </p>
                 </span>
+                {(isAvailable) && <h3> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(product.productPrice)}</h3> }
                 {(isAvailable) ? <button>Buy Now</button> : <h2>Not Available</h2>}
             </article>
         );
