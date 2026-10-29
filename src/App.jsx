@@ -4,6 +4,7 @@ import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import ProductGrid from './components/ProductGrid.jsx'
 import SocialBar from './components/SocialBar.jsx'
+import './Styles/crud.css';
 
 /**
  * Returns the app for this website
@@ -340,7 +341,7 @@ export default function App() {
           {mode === "Delete" && <p>Click the products you want to delete ({selectedProducts.length} selected), then submit.</p>}
 
           <div>
-                <button type="submit">{mode}</button>
+                <button type="submit" className =  {mode.toLowerCase()}>{mode}</button>
           </div> 
           </form>
     </section>
