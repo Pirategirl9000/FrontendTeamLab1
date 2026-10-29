@@ -18,7 +18,7 @@ export default function App() {
   let [searchText, setSearchText] = useState("");
   let [categorySelected, setCategorySelected] = useState("All");
 
-  const [selectedProduct, setSelectedProduct] = useState(-1);
+  let [selectedProduct, setSelectedProduct] = useState(-1);
   const [mode, setMode] = useState("create");
 
   /**
@@ -84,19 +84,28 @@ export default function App() {
 
     const e = {
       target: {
-        productName: "test",
-        productDescription: "test desc",
-        productPrice: 1,
-        productSeller: "test",
-        productAvailable: true,
-        productCategories: "a, b, c",
+        productName: {value: "test"},
+        productDescription: {value: "test desc"},
+        productPrice: {value: "1"},
+        productSeller: {value: "test"},
+        productAvailable: {checked: true},
+        productCategories: {value: "a, b, c"},
         testing: true  // Flags that we shouldn't store this
       }
     }
 
-    fAssert(createProduct(e), true, "Product creation failed - this error may cascade to further errors");
+    products = prods;
+    let newProds = createProduct(e);
+
+    fAssert(JSON.stringify(newProds) !== "", true, "Product creation failed - this error may cascade to further errors");
+    
+
+    categorySelected = "all";
     searchText = "test&test desc&==1&a&b&c"
-    filtered = filterProducts(prods);
+    filtered = filterProducts(newProds);
+    console.log(newProds);
+    console.log(filtered);
+    fAssert(filtered.length >= 1, true, "Could not find created products");
 
 
 
@@ -110,6 +119,8 @@ export default function App() {
     // Reset everything
     searchText = "";
     categorySelected = "all";
+    products = [];
+    selectedProduct = -1;
   }
 
   // Pull in the products from the json and format them
@@ -235,7 +246,7 @@ export default function App() {
    * @param {Event} e The event from the form
    * @returns the new products if testing
    */
-  function deleteProducts(e) {
+  function deleteProduct(e) {
     if (e.target.testing) {
       return products.filter(prod => prod.productID !== selectedProduct);
     }
@@ -250,11 +261,12 @@ export default function App() {
    * @param {Event} e The event fired by the form
    * @returns the new products if testing or null if failed
    */
-  function createProducts(e) {
+  function createProduct(e) {
     const name = e.target.productName?.value.trim();
     const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat).filter((val, index, arr) => arr.indexOf(val) === index);
     const seller = e.target.productSeller?.value.trim();
-    const price = e.target.productPrice?.value.trim();
+    let price = e.target.productPrice?.value?.trim();
+    if (price) price = Number.parseFloat(price);
     const desc = e.target.productDescription?.value.trim();
     const available = e.target?.productAvailable?.checked;
 
@@ -296,11 +308,12 @@ export default function App() {
    * @param {Event} e The event from the CRUD form
    * @returns The new products if testing
    */
-  function updateProducts(e) {
+  function updateProduct(e) {
       const name = e.target.productName?.value.trim();
       const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat).filter((val, index, arr) => arr.indexOf(val) === index);
       const seller = e.target.productSeller?.value.trim();
-      const price = e.target.productPrice?.value.trim();
+      let price = e.target.productPrice?.value?.trim();
+      if (price) price = Number.parseFloat(price);
       const desc = e.target.productDescription?.value.trim();
       const available = e.target?.productAvailable?.checked;
 
@@ -335,13 +348,13 @@ export default function App() {
 
     switch (e.target.act.value) {
       case "create":
-        createProducts(e);
+        createProduct(e);
         break;
       case "delete":
-        deleteProducts(e);
+        deleteProduct(e);
         break;
       case "update":
-        updateProducts(e);
+        updateProduct(e);
         break;
     }
   }
