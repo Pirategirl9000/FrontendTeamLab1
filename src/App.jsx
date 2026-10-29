@@ -318,8 +318,8 @@ export default function App() {
           <input className="productCategoriesInput" type="text" name="productCategories" placeholder="Product Categories (comma-separated)"></input>
           <input className="productAvailableInput" type="checkbox" value="yes" name="productAvailable"></input>
 
-          <textarea name="productDescription" placeholder="Product Description"></textarea>
-          <button type="submit">Submit</button>
+          <textarea className="productDescriptionInput" name="productDescription" placeholder="Product Description"></textarea>
+          <button className="listingSubmit" type="submit">Submit</button>
         </form>
       </section>
 
