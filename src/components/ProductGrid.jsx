@@ -12,7 +12,7 @@ export default function ProductGrid({prods, selectSetter}) {
     return (
         <section className="productGrid">
             {(prods.length) ? prods.map(prod => (
-                <ProductTile selectSetter={selectSetter} product={prod}></ProductTile>
+                <ProductTile key={prod.productID} selectSetter={selectSetter} product={prod}></ProductTile>
             )) : <span>No products found</span>}
         </section>
     );

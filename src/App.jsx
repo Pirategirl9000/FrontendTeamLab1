@@ -225,7 +225,7 @@ export default function App() {
     const seller = e.target.productSeller?.value.trim();
     const price = e.target.productPrice?.value.trim();
     const desc = e.target.productDescription?.value.trim();
-    const available = e.target?.checked;
+    const available = e.target?.productAvailable?.checked;
 
     if (!name || categories.length === 0 || !seller || !price || price < 0 || !desc) {
       alert("Creating product failed due to invalid inputs");
@@ -253,6 +253,8 @@ export default function App() {
       productCategories: categories
     }
 
+    console.log(newProd);
+
 
     setProducts(prods => [...prods, newProd]);
     setSelectedProduct(-1);
@@ -268,7 +270,7 @@ export default function App() {
       const seller = e.target.productSeller?.value.trim();
       const price = e.target.productPrice?.value.trim();
       const desc = e.target.productDescription?.value.trim();
-      const available = e.target?.checked;
+      const available = e.target?.productAvailable?.checked;
 
       const newProd = prod;
 
