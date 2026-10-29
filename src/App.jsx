@@ -221,7 +221,7 @@ export default function App() {
 
   function createProducts(e) {
     const name = e.target.productName?.value.trim();
-    const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat);
+    const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat).filter((val, index, arr) => arr.indexOf(val) === index);
     const seller = e.target.productSeller?.value.trim();
     const price = e.target.productPrice?.value.trim();
     const desc = e.target.productDescription?.value.trim();
@@ -266,7 +266,7 @@ export default function App() {
       if (prod.productID !== selectedProduct) return prod;
 
       const name = e.target.productName?.value.trim();
-      const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat);
+      const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat).filter((val, index, arr) => arr.indexOf(val) === index);
       const seller = e.target.productSeller?.value.trim();
       const price = e.target.productPrice?.value.trim();
       const desc = e.target.productDescription?.value.trim();
