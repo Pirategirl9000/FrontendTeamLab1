@@ -304,9 +304,9 @@ export default function App() {
   return (
     <>
       <Header />
-      <section className="listingForm">
+      <section className="listingSection">
         {(selectedProduct !== -1) ? <h2>{"Selected Product: " + products.filter(prod => prod.productID === selectedProduct)[0].productName}</h2> : <h2>No Product Selected</h2>}
-        <form onSubmit={handleFormSubmit}>
+        <form className="listingForm" onSubmit={handleFormSubmit}>
           <select className="listingSelect" name="act">
             <option className="listingOption" value="create">Create Listing</option>
             <option className="listingOption" value="delete">Delete Listing</option>
