@@ -94,7 +94,7 @@ export default function App() {
       }
     }
 
-    fassert(createProduct(e), true, "Product creation failed - this error may cascade to further errors");
+    fAssert(createProduct(e), true, "Product creation failed - this error may cascade to further errors");
     searchText = "test&test desc&==1&a&b&c"
     filtered = filterProducts(prods);
 
