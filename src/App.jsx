@@ -3,8 +3,7 @@ import './Styles/App.css';
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import ProductGrid from './components/ProductGrid.jsx'
-import SocialBar from './components/SocialBar.jsx'
-import './Styles/crud.css';
+
 
 /**
  * Returns the app for this website
@@ -19,10 +18,7 @@ export default function App() {
   let [searchText, setSearchText] = useState("");
   let [categorySelected, setCategorySelected] = useState("All");
 
-  //Crud form
-  const [mode, setMode] = useState("Create");
-  const [selectedProducts, setSelectedProducts] = useState([])
-  const selectedProduct = (mode === "Update") ? products.find(prod => prod.id === selectedProducts[0]) : undefined;
+  const [selectedProduct, setSelectedProduct] = useState(-1);
 
   /**
    * Fetches the products from the JSON file
@@ -36,102 +32,11 @@ export default function App() {
     const json = await response.json();
 
     return json.map((prod, index) => ({
-      id: prod.id || prod.productID || index + 1,  // If the product doesn't have an id we will assign it one based on its index in the array
+      id: prod.id || index + 1,  // If the product doesn't have an id we will assign it one based on its index in the array
       ...prod,
       productCategories: prod.productCategories.map(cat => cat.toLowerCase())
     }));
   }
-
-  /**
-   * CRUD Functions
-   */
-
-//function for creating product
-  function createProduct(newProduct) {
-    setProducts(prevProducts => [...prevProducts, newProduct]);
-  }
-// function for updatin product
-  function updateProduct(id, updatedProduct) {
-    setProducts(prevProducts => prevProducts.map(prod => prod.id === id ? { ...prod, ...updatedProduct } : prod));
-  }
-// function for deleting product
-  function deleteProduct(id) {
-    setProducts(prevProducts => prevProducts.filter(prod => prod.id !== id));
-  }
-
-
-  function handleModeChange(e) {
-    setMode(e.target.value);
-    setSelectedProducts([]);
-  }
-
-   function handleProductSelect(id) {
-    if (mode === "Create") return;
- 
-    if (mode === "Update") {
-      // Clicking the already selected tile unselects it, otherwise only this one product is selected (the form fills in from it)
-      setSelectedProducts(prev => prev.includes(id) ? [] : [id]);
-      return;
-    }
- 
-    // Delete mode
-    setSelectedProducts(prev => prev.includes(id) ? prev.filter(selectedID => selectedID !== id) : [...prev, id]);
-  }
-
-  function handleFormSubmit(e) {
-    e.preventDefault();
-    //handle deletion
-    if (mode === "Delete") {
-      if (selectedProducts.length === 0) {
-        alert("Click on at least one product to select it for deletion.");
-        return;
-      }
-      //delete each selected product and clear state
-      selectedProducts.forEach(id => deleteProduct(id));
-      setSelectedProducts([]);
-      return;
-    }
-
-    const form = e.target; // capture the form DOM element from the event target
-    const data = new FormData(form); // Form data to read inputs by their name attributes
-    const productName = data.get("productName").trim(); //gets the product name
-    const productDescription = data.get("productDescription").trim(); //gets the product description
-    const productPrice = data.get("productPrice"); //gets the product price
-    const productSeller = data.get("productSeller").trim(); // gets the seller name
-    const productCategories = data.get("productCategories"); // gets the category name
-
-    if (!productName || !productDescription || productPrice === "" || !productSeller || !productCategories.trim()) {
-      alert("Please fill in all required fields.");
-      return;
-    }
- 
-    const productData = {
-      productName,
-      productDescription,
-      productPrice: parseFloat(productPrice) || 0,
-      productSeller,
-      productCategories: productCategories.split(',').map(cat => cat.trim().toLowerCase()).filter(Boolean),  // Lowercase format as fetchproducts
-      productAvailable: data.get("productAvailable") === "on"  // An unchecked checkbox isn't included in the form data at all
-    };
- 
-    if (mode === "Update") {
-      if (selectedProducts.length === 0) {
-        alert("Click on a product to select it for updating.");
-        return;
-      }
-      // UPDATE: PRODUCT[ID] = UPDATED-PRODUCT
-      updateProduct(selectedProducts[0], productData);
-    } else {
-      // CREATE: PRODUCTS += NEW-PRODUCT
-      const newID = Date.now(); // Using date as it can pass as a unique ID
-      createProduct({ ...productData, id: newID, productID: newID });
-    }
- 
-    // CLEAR SELECTED (and empty the boxes)
-    setSelectedProducts([]);
-    form.reset();
-  }
-
 
   /**
    * If TESTING_ENV is set to true this function will run on mount and perform several assertion tests against expected values
@@ -308,45 +213,117 @@ export default function App() {
       .slice(0, 5);                                                   // Pull off the first five unique categories - or maybe it's 4, doesn't really matter
   }
 
+  function deleteProducts(e) {
+    setProducts(products => products.filter(prod => prod.productID !== selectedProduct));
+    setSelectedProduct(-1);
+    alert("Product Deleted");
+  }
+
+  function createProducts(e) {
+    const name = e.target.productName?.value.trim();
+    const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat);
+    const seller = e.target.productSeller?.value.trim();
+    const price = e.target.productPrice?.value.trim();
+    const desc = e.target.productDescription?.value.trim();
+    const available = e.target?.checked;
+
+    if (!name || categories.length === 0 || !seller || !price || price < 0 || !desc) {
+      alert("Creating product failed due to invalid inputs");
+      return;
+    }
+    
+    let newID = 1;
+    
+    products.forEach(prod => {
+      if (prod.productID > newID) {  // Bad way to do things but ideally a RDBMS would handle this
+        newID = prod.productID;
+      }
+    })
+
+    newID++;
+
+
+    const newProd = {
+      productID: newID,
+      productName: name,
+      productSeller: seller,
+      productPrice: price,
+      productDescription: desc,
+      productAvailable: available,
+      productCategories: categories
+    }
+
+
+    setProducts(prods => [...prods, newProd]);
+    setSelectedProduct(-1);
+    alert("Product Created");
+  }
+
+  function updateProducts(e) {
+    setProducts(products.map(prod => {
+      if (prod.productID !== selectedProduct) return prod;
+
+      const name = e.target.productName?.value.trim();
+      const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat);
+      const seller = e.target.productSeller?.value.trim();
+      const price = e.target.productPrice?.value.trim();
+      const desc = e.target.productDescription?.value.trim();
+      const available = e.target?.checked;
+
+      const newProd = prod;
+
+      if (name) newProd.productName = name;
+      if (categories.length) newProd.productCategories = categories;
+      if (seller) newProd.productSeller = seller;
+      if (price && price > 0) newProd.productPrice = price;
+      if (desc) newProd.productDescription = desc;
+      newProd.productAvailable = available; 
+
+      return newProd;
+      }))
+
+      alert("Product Updated");
+    }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+
+    switch (e.target.act.value) {
+      case "create":
+        createProducts(e);
+        break;
+      case "delete":
+        deleteProducts(e);
+        break;
+      case "update":
+        updateProducts(e);
+        break;
+    }
+  }
+
   return (
     <>
       <Header />
-
-
-      <section className="crudForm">
-        <h3>Product Menu</h3>
-        <form key ={mode + (selectedProducts[0] ?? "")} onSubmit = {handleFormSubmit}>
-           <select className="crudMenu" value={mode} onChange={handleModeChange}>
-            <option value="Create">Create</option>
-            <option value="Update">Update</option>
-            <option value="Delete">Delete</option>
+      <section className="filterForm">
+        {(selectedProduct !== -1) ? <h2>{"Selected Product: " + products.filter(prod => prod.productID === selectedProduct)[0].productName}</h2> : <h2>No Product Selected</h2>}
+        <form onSubmit={handleFormSubmit}>
+          <select name="act">
+            <option value="create">Create Listing</option>
+            <option value="delete">Delete Listing</option>
+            <option value="update">Update Listing</option>
           </select>
+          <input type="text" name="productName" placeholder="Product Name"></input>
+          <input type="number" min="0" step="0.01" name="productPrice" placeholder="Product Price"></input>
+          <input type="text" name="productSeller" placeholder="Product Seller"></input>
+          <input type="text" name="productCategories" placeholder="Product Categories (comma-separated)"></input>
+          <input type="checkbox" value="yes" name="productAvailable"></input>
 
-          {mode !== "Delete" && (
-            <>
-              <input type="text" name="productName" placeholder="Product Name" defaultValue={selectedProduct?.productName ?? ""}></input> {/*Product Name*/}
-              <input type="text" name="productDescription" placeholder="Product Description" defaultValue={selectedProduct?.productDescription ?? ""}></input> {/*Product Description*/}
-              <input type="number" step="0.01" name="productPrice" placeholder="Product Price" defaultValue={selectedProduct?.productPrice ?? ""}></input> {/*Product Price*/}
-              <input type="text" name="productSeller" placeholder="Product Seller" defaultValue={selectedProduct?.productSeller ?? ""}></input> {/*Product Seller*/}
-              <input type="text" name="productCategories" placeholder="Product Categories" defaultValue={selectedProduct?.productCategories.join(', ') ?? ""}></input> {/*Product Category*/}
+          <textarea name="productDescription" placeholder="Product Description"></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </section>
 
-        <label>
-              <input type="checkbox" name="productAvailable" defaultChecked = {Boolean(selectedProduct?.productAvailable)}></input> {/*Product Availability as a checkbox*/}
-              Available
-        </label>
-          </>
-          )}
-
-          {mode === "Update" && <p>Click a product to select it, then edit its info above and submit.</p>}
-          {mode === "Delete" && <p>Click the products you want to delete ({selectedProducts.length} selected), then submit.</p>}
-
-          <div>
-                <button type="submit" className =  {mode.toLowerCase()}>{mode}</button>
-          </div> 
-          </form>
-    </section>
-
-    <section className="filterForm">
+      <section className="filterForm">
         <select className="selectFilter" onChange={updateFilters}>
           <option value="All">All</option>
           {getUniqueCategories(products).map(cat => <option key={cat} value={cat}>{cat}</option>)}
@@ -355,10 +332,9 @@ export default function App() {
       </section>
 
       <section className="products">
-        <ProductGrid prods={filteredProducts} selectedIDs={selectedProducts} onSelect={handleProductSelect}></ProductGrid>
+        <ProductGrid selectSetter={setSelectedProduct} prods={filteredProducts}></ProductGrid>
       </section>
 
-      <SocialBar />  {/* TODO: Isaiah style this properly because right now its just a column, it returns a section that has a class name you could use */}
       <Footer />
     </>
   )
