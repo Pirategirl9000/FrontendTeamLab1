@@ -327,6 +327,7 @@ export default function App() {
       </section>
 
       <section className="filterForm">
+        <p>Filter Products</p>
         <select className="selectFilter" onChange={updateFilters}>
           <option value="All">All</option>
           {getUniqueCategories(products).map(cat => <option key={cat} value={cat}>{cat}</option>)}

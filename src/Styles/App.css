@@ -183,6 +183,18 @@
   }
 }
 
+/* Filter Form Stuff */
+/* You can edit this Isaiah, I just wanted something that looked a little nice in case you didn't get to this */
+.filterForm {
+  display: grid;
+  padding-bottom: 1em;
+}
+
+.selectFilter, .searchFilter {
+  min-height: 40px;
+  margin: 0 0.4em;
+}
+
 /* Listing Form Stuff */
 /* You can customize this more if you want Isaiah, I'm done with it */
 .listingForm {
