@@ -92,7 +92,3 @@ button :hover {
     color: #000;
     padding: 16px 32px;
 }
-
-.selected {
-  background: blue;
-}
