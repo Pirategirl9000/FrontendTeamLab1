@@ -304,6 +304,18 @@ export default function App() {
     }
   }
 
+  /**
+   * Returns information about the CRUD mode
+   * @returns a short string containing info about CRUD mode usage
+   */
+  function getModeInfo() {
+    switch (mode) {
+      case "create": return "Enter the product info into the form then click 'create'";
+      case "delete": return "Click a product tile to select it then click 'delete'"
+      case "update": return "Click a product tile to select it then enter any info you would like to change";
+    }
+  }
+
   return (
     <>
       <Header />
@@ -326,6 +338,7 @@ export default function App() {
 
           <textarea className="productDescriptionInput" name="productDescription" placeholder="Product Description"></textarea>
           <button className={`listingSubmit ${mode}`} type="submit">{mode}</button>
+          <span className="listingInfo">{getModeInfo()}</span>
         </form>
       </section>
 
