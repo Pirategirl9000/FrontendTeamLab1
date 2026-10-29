@@ -244,5 +244,15 @@
   margin: 0.4em;
 }
 
+.listingSubmit.create {
+  background: green;
+}
 
+.listingSubmit.delete {
+  background: red;
+}
+
+.listingSubmit.update {
+  background: orange;
+}
 

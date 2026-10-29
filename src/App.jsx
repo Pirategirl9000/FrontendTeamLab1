@@ -19,6 +19,7 @@ export default function App() {
   let [categorySelected, setCategorySelected] = useState("All");
 
   const [selectedProduct, setSelectedProduct] = useState(-1);
+  const [mode, setMode] = useState("create");
 
   /**
    * Fetches the products from the JSON file
@@ -309,7 +310,7 @@ export default function App() {
       <section className="listingSection">
         {(selectedProduct !== -1) ? <h2>{"Selected Product: " + products.filter(prod => prod.productID === selectedProduct)[0].productName}</h2> : <h2>No Product Selected</h2>}
         <form className="listingForm" onSubmit={handleFormSubmit}>
-          <select className="listingSelect" name="act">
+          <select className="listingSelect" name="act" onChange={(e) => setMode(e.target.value)}>
             <option className="listingOption" value="create">Create Listing</option>
             <option className="listingOption" value="delete">Delete Listing</option>
             <option className="listingOption" value="update">Update Listing</option>
@@ -324,7 +325,7 @@ export default function App() {
           </label>
 
           <textarea className="productDescriptionInput" name="productDescription" placeholder="Product Description"></textarea>
-          <button className="listingSubmit" type="submit">Submit</button>
+          <button className={`listingSubmit ${mode}`} type="submit">{mode}</button>
         </form>
       </section>
 
