@@ -295,6 +295,7 @@ export default function App() {
       return newProd;
       }))
 
+      setSelectedProduct(-1);
       alert("Product Updated");
     }
 
