@@ -113,15 +113,6 @@ export default function App() {
     selectedProduct = 1;
     fAssert(newProds.length - 1 === deleteProduct(e).length, true, "Failed to delete product");  // Compare it to the length of the old test
 
-
-
-
-
-
-
-
-
-
     // Reset everything
     searchText = "";
     categorySelected = "all";
