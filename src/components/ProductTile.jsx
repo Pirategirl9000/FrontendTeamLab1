@@ -19,7 +19,7 @@ export default function ProductTile( {product, selectSetter}) {
                 <span onClick={selectProduct}>
                     <h2>
                         {product.productName}
-                        <div className="category-label">Tags: {product.productCategories}</div>
+                        <div className="category-label">Tags: {product.productCategories.join(" ")}</div>
                     </h2>
                     <h4>
                         <strong>Seller: </strong>
