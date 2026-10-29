@@ -304,19 +304,19 @@ export default function App() {
   return (
     <>
       <Header />
-      <section className="filterForm">
+      <section className="listingForm">
         {(selectedProduct !== -1) ? <h2>{"Selected Product: " + products.filter(prod => prod.productID === selectedProduct)[0].productName}</h2> : <h2>No Product Selected</h2>}
         <form onSubmit={handleFormSubmit}>
-          <select name="act">
-            <option value="create">Create Listing</option>
-            <option value="delete">Delete Listing</option>
-            <option value="update">Update Listing</option>
+          <select className="listingSelect" name="act">
+            <option className="listingOption" value="create">Create Listing</option>
+            <option className="listingOption" value="delete">Delete Listing</option>
+            <option className="listingOption" value="update">Update Listing</option>
           </select>
-          <input type="text" name="productName" placeholder="Product Name"></input>
-          <input type="number" min="0" step="0.01" name="productPrice" placeholder="Product Price"></input>
-          <input type="text" name="productSeller" placeholder="Product Seller"></input>
-          <input type="text" name="productCategories" placeholder="Product Categories (comma-separated)"></input>
-          <input type="checkbox" value="yes" name="productAvailable"></input>
+          <input className="productNameInput" type="text" name="productName" placeholder="Product Name"></input>
+          <input className="productPriceInput" type="number" min="0" step="0.01" name="productPrice" placeholder="Product Price"></input>
+          <input className="productSellerInput" type="text" name="productSeller" placeholder="Product Seller"></input>
+          <input className="productCategoriesInput" type="text" name="productCategories" placeholder="Product Categories (comma-separated)"></input>
+          <input className="productAvailableInput" type="checkbox" value="yes" name="productAvailable"></input>
 
           <textarea name="productDescription" placeholder="Product Description"></textarea>
           <button type="submit">Submit</button>
