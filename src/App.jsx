@@ -82,6 +82,22 @@ export default function App() {
       biggest = cc;
     }
 
+    const e = {
+      target: {
+        productName: "test",
+        productDescription: "test desc",
+        productPrice: 1,
+        productSeller: "test",
+        productAvailable: true,
+        productCategories: "a, b, c",
+        testing: true  // Flags that we shouldn't store this
+      }
+    }
+
+    fassert(createProduct(e), true, "Product creation failed - this error may cascade to further errors");
+    searchText = "test&test desc&==1&a&b&c"
+    filtered = filterProducts(prods);
+
 
 
 
@@ -217,8 +233,13 @@ export default function App() {
   /**
    * Deletes the selected product
    * @param {Event} e The event from the form
+   * @returns the new products if testing
    */
   function deleteProducts(e) {
+    if (e.target.testing) {
+      return products.filter(prod => prod.productID !== selectedProduct);
+    }
+
     setProducts(products => products.filter(prod => prod.productID !== selectedProduct));
     setSelectedProduct(-1);
     alert("Product Deleted");
@@ -227,7 +248,7 @@ export default function App() {
   /**
    * Creates a new product with info from the CRUD form
    * @param {Event} e The event fired by the form
-   * @returns 
+   * @returns the new products if testing or null if failed
    */
   function createProducts(e) {
     const name = e.target.productName?.value.trim();
@@ -238,8 +259,8 @@ export default function App() {
     const available = e.target?.productAvailable?.checked;
 
     if (!name || categories.length === 0 || !seller || !price || price < 0 || !desc) {
-      alert("Creating product failed due to invalid inputs");
-      return;
+      if (!e.target.testing) alert("Creating product failed due to invalid inputs");
+      return null;
     }
     
     let newID = 1;
@@ -263,6 +284,8 @@ export default function App() {
       productCategories: categories
     }
 
+    if (e.target.testing) return [...products, newProd];
+
     setProducts(prods => [...prods, newProd]);
     setSelectedProduct(-1);
     alert("Product Created");
@@ -271,11 +294,9 @@ export default function App() {
   /**
    * Updates the selected product with info from the event
    * @param {Event} e The event from the CRUD form
+   * @returns The new products if testing
    */
   function updateProducts(e) {
-    setProducts(products.map(prod => {
-      if (prod.productID !== selectedProduct) return prod;
-
       const name = e.target.productName?.value.trim();
       const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat).filter((val, index, arr) => arr.indexOf(val) === index);
       const seller = e.target.productSeller?.value.trim();
@@ -283,18 +304,24 @@ export default function App() {
       const desc = e.target.productDescription?.value.trim();
       const available = e.target?.productAvailable?.checked;
 
-      const newProd = prod;
+      const newProducts = products.map(prod => {
+        if (prod.productID !== selectedProduct) return prod;
 
-      if (name) newProd.productName = name;
-      if (categories.length) newProd.productCategories = categories;
-      if (seller) newProd.productSeller = seller;
-      if (price && price > 0) newProd.productPrice = price;
-      if (desc) newProd.productDescription = desc;
-      newProd.productAvailable = available; 
+        const newProd = prod;
 
-      return newProd;
-      }))
+        if (name) newProd.productName = name;
+        if (categories.length) newProd.productCategories = categories;
+        if (seller) newProd.productSeller = seller;
+        if (price && price > 0) newProd.productPrice = price;
+        if (desc) newProd.productDescription = desc;
+        newProd.productAvailable = available; 
 
+        return newProd;
+      })
+
+      if (e.target.testing) return newProducts;
+
+      setProducts(newProducts);
       setSelectedProduct(-1);
       alert("Product Updated");
     }
