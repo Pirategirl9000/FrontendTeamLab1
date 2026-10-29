@@ -214,12 +214,21 @@ export default function App() {
       .slice(0, 5);                                                   // Pull off the first five unique categories - or maybe it's 4, doesn't really matter
   }
 
+  /**
+   * Deletes the selected product
+   * @param {Event} e The event from the form
+   */
   function deleteProducts(e) {
     setProducts(products => products.filter(prod => prod.productID !== selectedProduct));
     setSelectedProduct(-1);
     alert("Product Deleted");
   }
 
+  /**
+   * Creates a new product with info from the CRUD form
+   * @param {Event} e The event fired by the form
+   * @returns 
+   */
   function createProducts(e) {
     const name = e.target.productName?.value.trim();
     const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat).filter((val, index, arr) => arr.indexOf(val) === index);
@@ -262,6 +271,10 @@ export default function App() {
     alert("Product Created");
   }
 
+  /**
+   * Updates the selected product with info from the event
+   * @param {Event} e The event from the CRUD form
+   */
   function updateProducts(e) {
     setProducts(products.map(prod => {
       if (prod.productID !== selectedProduct) return prod;
@@ -288,6 +301,10 @@ export default function App() {
       alert("Product Updated");
     }
 
+    /**
+     * Handles the CRUD form submission by deferring work to the relevant functions
+     * @param {Event} e The event that this originated from
+     */
   function handleFormSubmit(e) {
     e.preventDefault();
 
