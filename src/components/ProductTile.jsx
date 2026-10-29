@@ -1,6 +1,13 @@
 // Brayden this is yours
 import '../Styles/ProductTile.css';
 
+/**
+ * 
+ * @param {Object} props The props for this component
+ * @param {Object} props.product The product to render 
+ * @param {Function} props.selectSetter Function for setting which product is selected for CRUD operations
+ * @returns A product tile containing all the info
+ */
 export default function ProductTile( {product, selectSetter}) {
     const ID = product.productID;
     const isAvailable = product.productAvailable
