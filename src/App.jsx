@@ -316,7 +316,10 @@ export default function App() {
           <input className="productPriceInput" type="number" min="0" step="0.01" name="productPrice" placeholder="Product Price"></input>
           <input className="productSellerInput" type="text" name="productSeller" placeholder="Product Seller"></input>
           <input className="productCategoriesInput" type="text" name="productCategories" placeholder="Product Categories (comma-separated)"></input>
-          <input className="productAvailableInput" type="checkbox" value="yes" name="productAvailable"></input>
+          <label>
+            Product Available
+            <input className="productAvailableInput" type="checkbox" value="yes" name="productAvailable"></input>
+          </label>
 
           <textarea className="productDescriptionInput" name="productDescription" placeholder="Product Description"></textarea>
           <button className="listingSubmit" type="submit">Submit</button>
