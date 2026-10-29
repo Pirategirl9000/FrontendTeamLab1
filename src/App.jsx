@@ -107,7 +107,7 @@ export default function App() {
 
   useEffect(() => {
     setFilteredProducts(filterProducts());
-  }, [categorySelected, searchText]);
+  }, [products, categorySelected, searchText]);
 
 
   if (TESTING_ENV) useEffect(() => { test() }, []);
@@ -213,34 +213,113 @@ export default function App() {
       .slice(0, 5);                                                   // Pull off the first five unique categories - or maybe it's 4, doesn't really matter
   }
 
-  function handleFormSubmit() {
+  function deleteProducts(e) {
+    setProducts(products => products.filter(prod => prod.productID !== selectedProduct));
+    setSelectedProduct(-1);
+    alert("Product Deleted");
+  }
 
+  function createProducts(e) {
+    const name = e.target.productName?.value.trim();
+    const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat);
+    const seller = e.target.productSeller?.value.trim();
+    const price = e.target.productPrice?.value.trim();
+    const desc = e.target.productDescription?.value.trim();
+    const available = e.target?.checked;
+
+    if (!name || categories.length === 0 || !seller || !price || price < 0 || !desc) {
+      alert("Creating product failed due to invalid inputs");
+      return;
+    }
+    
+    let newID = 1;
+    
+    products.forEach(prod => {
+      if (prod.productID > newID) {  // Bad way to do things but ideally a RDBMS would handle this
+        newID = prod.productID;
+      }
+    })
+
+    newID++;
+
+
+    const newProd = {
+      productID: newID,
+      productName: name,
+      productSeller: seller,
+      productPrice: price,
+      productDescription: desc,
+      productAvailable: available,
+      productCategories: categories
+    }
+
+
+    setProducts(prods => [...prods, newProd]);
+    setSelectedProduct(-1);
+    alert("Product Created");
+  }
+
+  function updateProducts(e) {
+    setProducts(products.map(prod => {
+      if (prod.productID !== selectedProduct) return prod;
+
+      const name = e.target.productName?.value.trim();
+      const categories = e.target.productCategories?.value.split(",").map(cat => cat.trim()).filter(cat => cat);
+      const seller = e.target.productSeller?.value.trim();
+      const price = e.target.productPrice?.value.trim();
+      const desc = e.target.productDescription?.value.trim();
+      const available = e.target?.checked;
+
+      const newProd = prod;
+
+      if (name) newProd.productName = name;
+      if (categories.length) newProd.productCategories = categories;
+      if (seller) newProd.productSeller = seller;
+      if (price && price > 0) newProd.productPrice = price;
+      if (desc) newProd.productDescription = desc;
+      newProd.productAvailable = available; 
+
+      return newProd;
+      }))
+
+      alert("Product Updated");
+    }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+
+    switch (e.target.act.value) {
+      case "create":
+        createProducts(e);
+        break;
+      case "delete":
+        deleteProducts(e);
+        break;
+      case "update":
+        updateProducts(e);
+        break;
+    }
   }
 
   return (
     <>
       <Header />
       <section className="filterForm">
-        <h3></h3>
+        {(selectedProduct !== -1) ? <h2>{"Selected Product: " + products.filter(prod => prod.productID === selectedProduct)[0].productName}</h2> : <h2>No Product Selected</h2>}
         <form onSubmit={handleFormSubmit}>
+          <select name="act">
+            <option value="create">Create Listing</option>
+            <option value="delete">Delete Listing</option>
+            <option value="update">Update Listing</option>
+          </select>
           <input type="text" name="productName" placeholder="Product Name"></input>
-          <input type="text" name="productDescription" placeholder="Product Description"></input>
-          <input type="number" name="productPrice" placeholder="Product Price"></input>
+          <input type="number" min="0" step="0.01" name="productPrice" placeholder="Product Price"></input>
           <input type="text" name="productSeller" placeholder="Product Seller"></input>
           <input type="text" name="productCategories" placeholder="Product Categories (comma-separated)"></input>
-          <input type="checkbox" name="productInStock" placeholder="Product In Stock"></input>
+          <input type="checkbox" value="yes" name="productAvailable"></input>
 
           <textarea name="productDescription" placeholder="Product Description"></textarea>
-          <div>
-            <button>
-
-            </button>
-
-            <button>
-
-            </button>
-
-          </div>
+          <button type="submit">Submit</button>
         </form>
       </section>
 
@@ -250,21 +329,6 @@ export default function App() {
           {getUniqueCategories(products).map(cat => <option key={cat} value={cat}>{cat}</option>)}
         </select>
         <input type="text" placeholder="Search for products" className="searchFilter" onChange={updateFilters}></input>
-      </section>
-
-      //CRUD delete and edit
-
-      <section>
-        <ul>
-          {filteredProducts.map(product => (
-            <li key={product.id}>
-              <div>
-                <button onClick={() => handleEditProduct(product.id)}>Edit</button>
-                <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
-              </div>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <section className="products">
