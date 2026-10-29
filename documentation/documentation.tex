@@ -105,6 +105,8 @@ I didn't face much challenge in writing the psuedocode. The READ was already com
 \subsubsection{CRUD Implementation}
 Originally I was not in charge of the implementation but this changed later in development. I didn't really have any issues writing the CRUD as the psuedocode provided a perfect template. There was some difficulty in getting the checkbox to work properly since documentation on checkboxes in forms is sparse but eventaully I figured it out. I originally planned for the tiles to change colors when they were selected but due to the time crunch I decided to leave that out and instead add some other ways to indicate that a product was selected like the product name and an alert on clicking it. I also did a bit of styling just so stuff looked a little better but didn't do much for it.
 
+I took on CRUD implementation because I thought Jarrod had done it all wrong when he did it so I wound up redoing it. After taking a closer look at his code I realized while there were issues with the code and some of the things I criticized him for were just incorrect. I have since apologized to him for my outburst and included some of his features in the code. One of his ideas was using a mode state to change the color and text of the submit button. Originally I didn't know why mode was being used for class and criticized him for this but eventually I realized what I had missed. I decided to re-add this feature. I made some changes so it no longer uses a detached function instead just placing it right in the JSX as an arrow function to try to keep things a bit cleaner. Additionally I added his idea of having the different modes display a short description on how to use them. Instead of embedding it into the JSX I used a seperate function to keep things easy to read.
+
 \subsubsection{Testing}
 I was in charge of writing most of the testing code. I was not initially going to make robust test cases but I realized as I was testing that simple checks here and there were not sufficient and we needed a stream-lined was to do this. I did this by writing a test() function inside App.jsx that would test different parts of our code. Within this function there is a arrow function called fAssert() which is used to speed up assertion checks. It takes in three parameters: value, expected, msg. Value is the value you want to do the assertion check on and is the only required parameter. This is the value you want to compare to expected to see if it matches. Expected is the value you expect to get, if the value does not match expected there is an error that gets logged in the console. Expected has a default value of true meaning you can pass a conditional to value to quickly do an assertion check. The final parameter, msg, outputs a unique message when assertion fails. This msg will follow the text `Assertion Fail: '.
 
@@ -227,6 +229,11 @@ for (const cc of filtered) {
     biggest = cc;
 }
 \end{lstlisting}
+
+\subsubsection{CRUD}
+Tests were written to assure that products were being created, deleted, and updated properly. This required remodelling the functions to be able to work when the app wasn't running. I just created a fake Event object that had any properties accessed by the functions available. To the function it just looks like a normal object. In the process of this I found some errors in how numbers were being saved to products where they weren't being parsed. I didn't think this was a problem until I realized search filtering by price fails when this isn't a number so I changed those things. 
+
+Various tests were done outside the test function where I noticed that the product tiles were not properly handling multiple categories so I fixed that in ProductTile.
 
 \subsection{Debugging}
 \subsubsection{Filtering - Violet}
