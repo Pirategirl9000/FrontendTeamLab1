@@ -184,6 +184,7 @@
 }
 
 /* Listing Form Stuff */
+/* You can customize this more if you want Isaiah, I'm done with it */
 .listingForm {
   display: flex;
   flex-direction: column;
