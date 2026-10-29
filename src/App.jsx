@@ -32,8 +32,7 @@ export default function App() {
 
     const json = await response.json();
 
-    return json.map((prod, index) => ({
-      id: prod.id || index + 1,  // If the product doesn't have an id we will assign it one based on its index in the array
+    return json.map((prod) => ({
       ...prod,
       productCategories: prod.productCategories.map(cat => cat.toLowerCase())
     }));
