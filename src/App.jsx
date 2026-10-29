@@ -112,7 +112,7 @@ export default function App() {
     fAssert(filterProducts(newProds).length >= 1, true, "Updating product failed");
 
     selectedProduct = 1;
-    fAssert(newProds.length - 1 === deleteProduct(e), true, "Failed to delete product");  // Compare it to the length of the old test
+    fAssert(newProds.length - 1 === deleteProduct(e).length, true, "Failed to delete product");  // Compare it to the length of the old test
 
 
 
