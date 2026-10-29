@@ -182,3 +182,47 @@
     border-right-color: var(--border);
   }
 }
+
+/* Listing Form Stuff */
+.listingForm {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  padding: 0.5em;
+}
+
+.listingSelect {
+  min-height: 40px;
+}
+
+.productNameInput {
+  min-height: 25px;
+
+}
+
+.productPriceInput {
+  min-height: 25px;
+
+}
+
+.productSellerInput {
+  min-height: 25px;
+
+}
+
+.productCategoriesInput {
+  min-height: 25px;
+
+}
+
+.productDescriptionInput {
+  min-height: 25px;
+}
+
+.listingSubmit {
+  padding: 0.2em;
+  margin: 0.4em;
+}
+
+
+
