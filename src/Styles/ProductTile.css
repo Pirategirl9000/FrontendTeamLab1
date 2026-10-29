@@ -52,6 +52,12 @@
     border: solid 2px;
 }
 
+.products .products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));  
+  gap: 20px;                                                      
+}
+
 .category-label{
     font-size: 15px;
     color: gray
