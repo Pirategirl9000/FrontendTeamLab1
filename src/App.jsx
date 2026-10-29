@@ -263,9 +263,6 @@ export default function App() {
       productCategories: categories
     }
 
-    console.log(newProd);
-
-
     setProducts(prods => [...prods, newProd]);
     setSelectedProduct(-1);
     alert("Product Created");
