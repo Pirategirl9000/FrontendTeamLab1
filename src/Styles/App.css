@@ -197,10 +197,17 @@
 
 /* Listing Form Stuff */
 /* You can customize this more if you want Isaiah, I'm done with it */
+.listingSection {
+  border: 1px solid var(--border);
+}
+
+.listingSection h2 {
+  margin: 0.2em;
+}
+
 .listingForm {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border);
   padding: 0.5em;
 }
 
