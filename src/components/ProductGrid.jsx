@@ -1,4 +1,5 @@
 import ProductTile from './ProductTile';
+import '../Styles/ProductGrid.css';
 
 /**
  * Returns a section containing all the products given or a span indicating that there were no products
