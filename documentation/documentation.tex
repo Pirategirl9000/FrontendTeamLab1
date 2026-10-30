@@ -134,9 +134,67 @@ I was in charge of creating the JSON file and fetching the data from the JSON fi
 For fetching that data from the JSON file I decided on using a useEffect for pulling in the products. It preserves the raw dataset, keeping the full products list intact. Also ensures that you do not lose any items when filtering, allowing users to clear or change their search without re-fetching from the file. Doing it this way also separates lifecycles for better performance ensuring that the filtering logic only runs when the search text or selected category actually changes, rather than executing on every single component re-render.
 
 \subsection{Isaiah}
-\subsubsection{Interface Design}
+\subsubsection{Interface}
+As the web designer for GenStore, I was responsible for planning the visual architecture, establishing the responsive layout system, building the persistent shell 
+components (Header and Footer), and styling the application for an authentic e-commerce feel.
 
+I began by drafting the Interface Sketch (Figure 2) to translate the project requirements into a concrete UI layout. The architectural plan called for:
+\begin{enumerate}
+    \item A sticky top header for persistent site branding and quick access to social media channels.
+    \item A clean, responsive footer anchored to the bottom of the viewport containing store navigation and legal notices.
+\end{enumerate}
 
+To ensure project cleanliness as the codebase expanded, I also refactored our styles by organizing all stylesheets into a centralized 
+\texttt{src/Styles/} directory and standardizing their imports across components.
+
+\subsubsection{Header Component and Responsive Social Bar}
+In \texttt{Header.jsx} and \texttt{Header.css}, I created the top application frame. The header utilizes Flexbox to anchor the store title on the 
+left and house the \texttt{SocialBar} component on the right. To give the store a modern, polished look, I configured the header with sticky positioning 
+(\texttt{position: sticky; top: 0;}) with a semi-transparent blended background (\texttt{color-mix(in srgb, var(--bg) 95\%, transparent)}) and a subtle hover transition.
+
+To present the social media channels cleanly, I styled the \texttt{.socialBar} using CSS Grid with four auto-sized columns on desktop 
+(\texttt{grid-template-columns: repeat(4, auto);}). Violet had initially imported the static social icons at 20px, but they appeared 
+too small in the context of the header banner. I scaled them up to 32px for improved visibility and added hover transitions. Furthermore, 
+to accommodate mobile devices, I added a media query for viewports $\le$ 640px that collapses the social bar into a 2x2 grid and scales the icons to 1.5rem, 
+preventing any horizontal clipping or layout distortion.
+
+\subsubsection{Footer Component and Dynamic Navigation}
+In \texttt{Footer.jsx} and \texttt{Footer.css}, I implemented the bottom boundary of the application. Beyond a simple copyright line, 
+I built out an entire navigation links section modeled after production e-commerce platforms, including \texttt{Support}, \texttt{FAQ}, \texttt{Report}, \texttt{Become a seller}, and \texttt{Orders}.
+
+The footer is styled with Flexbox in a column orientation with consistent spacing (\texttt{gap: 1.25rem}). To ensure that the navigation links 
+remain fully responsive across various device form factors, I configured \texttt{.footerLinks} with \texttt{display: flex}, \texttt{justify-content: space-around},
+and \texttt{flex-wrap: wrap}. On narrower phone screens, the links naturally wrap into tidy rows rather than overflowing the viewport or introducing horizontal scrollba rs.
+I also added smooth text color transitions on hover (\texttt{color: var(--accent)}) and a centered copyright banner.
+
+\subsubsection{Global E-Commerce Theming and Palette}
+In \texttt{index.css}, I overhauled the default starter styling to implement an e-commerce theme with high visual contrast and accessibility. 
+I defined semantic CSS root variables for both light and dark modes:
+\begin{itemize}
+    \item \texttt{--bg} and \texttt{--bg-edge}: Provide a rich background with subtle linear gradient borders.
+    \item \texttt{--text} and \texttt{--text-h}: High-contrast colors for body text and headers.
+    \item \texttt{--accent}, \texttt{--accent-bg}, and \texttt{--accent-border}: Vibrant blue tones used for interactive elements, focus states, and link hovers.
+    \item \texttt{--social-bg} and \texttt{--border}: Neutral tones for component cards, input fields, and structural separators.
+\end{itemize}
+
+By configuring \texttt{@media (prefers-color-scheme: dark)}, the store dynamically respects the user's operating system preferences, 
+switching between a clean, crisp light storefront and an eye-friendly dark shopping environment without requiring JavaScript state.
+
+\subsubsection{Form Styling, Container Spacing, and Product Grid Alignment}
+To bring the entire application together into a unified experience, I polished the interactive elements in \texttt{App.css} and \texttt{ProductGrid.css}:
+\begin{itemize}
+    \item \textbf{Container Spacing:} Added horizontal padding (\texttt{padding-left: 1rem; padding-right: 1rem; box-sizing: border-box;}) across \texttt{.listingSection},
+    \texttt{.filterForm}, and \texttt{.products}. This eliminated an issue where input fields and product grids collided directly with the application border on mobile screens.
+    
+    \item \textbf{Input Field Polish:} Standardized the select dropdowns, search input, and CRUD input fields with thematic backgrounds (\texttt{var(--social-bg)}), 
+    rounded borders (\texttt{border-radius: 6px}), comfortable padding, and custom glowing focus rings (\texttt{box-shadow: 0 0 0 3px var(--accent-bg)}).
+
+    \item \textbf{Action Buttons:} Applied \texttt{text-transform: capitalize} to \texttt{.listingSubmit}. This allowed the action button text to display in clean
+    title case (``Create'', ``Update'', ``Delete'') while allowing the underlying JavaScript mode state to remain in lowercase, preventing case-mismatch bugs.
+    
+    \item \textbf{Product Grid Centering:} In \texttt{ProductGrid.css}, I added a mobile media query for screens $\le$ 544px with \texttt{justify-content: center} and 
+    \texttt{justify-items: center}, ensuring that when the product grid collapses to a single column, product cards remain centered rather than skewing awkwardly to the left.
+\end{itemize}
 
 \section{Testing}
 Most of the testing for this program was done via the test() function in App.jsx. The test function gets run on mount via a useEffect(), this is to prevent it running multiple times. Many functions had to be redesigned in ways that would allow them to run without the state variables. State variables can be used for testing but they cannot be set using their setState function. The setState function works lazily in that it will only change state on next render. Seeing as the useEffect with an empty dependency array only runs on first mount, when the component is first being rendered these setStates will never work withing the context of the test function. State variables can be used but they must be set directly rather than via the setState function provided by useState(). Typically you should avoid this as the purpose of useState is to create variables who can trigger rerenders of dependencies but since the test function is based on assertion tests and isn't concerned with rendering this is alright. Additionally the products fetching function had to be created as the test function must be able to pull in the products to run its tests. To trigger testing the TESTING\_ENV variable must be set to true. This is not an environment variable unlike its name may suggest, instead it sits in the code directly and must be edited by the programmer to enable or disable it.
@@ -321,6 +379,99 @@ function filterProducts(prods=null) {
     );
 }
 
+\end{lstlisting}
+
+\subsubsection{Footer Viewport Floating - Isaiah}
+During early development and testing of the empty product state, a layout bug occurred where the footer would float in the middle of the screen whenever there were few or no products displayed. Because the main content did not fill the vertical height of the browser window, the normal document flow placed the footer immediately below the listing form, leaving a large awkward blank space between the footer and the bottom of the screen.
+
+To fix this, I set up a CSS Flexbox sticky-footer architecture. In \texttt{index.css}, I styled the root application container (\texttt{\#root}) to have a minimum height equal to the full viewport height (\texttt{min-height: 100svh;}) and configured it as a flex column. Then, in \texttt{Footer.css}, I gave the \texttt{footer} element \texttt{margin-top: auto;}. This instructs the flex layout engine to automatically consume all remaining vertical space above the footer, pushing it securely to the bottom of the viewport when content is short, while allowing it to naturally scroll down when the product catalog is populated.
+
+\begin{lstlisting}[caption=Sticky Footer Flexbox Implementation]
+/* In src/Styles/index.css */
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--bg);
+}
+
+/* In src/Styles/Footer.css */
+footer {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background-color: color-mix(in srgb, var(--bg) 95%, transparent);
+  margin-top: auto;
+  padding: 1.5rem 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+\end{lstlisting}
+
+\subsubsection{Header Social Bar Mobile Collision - Isaiah}
+When testing responsiveness on mobile viewports ($\le$ 640px), the header layout broke. Violet's \texttt{SocialBar} component originally rendered the four social media icon links in a single horizontal row. On narrow mobile displays, this 4-column layout consumed too much horizontal space, colliding with the GenStore title and causing the header elements to either clip out of the viewport or force an unwanted horizontal scrollbar.
+
+To resolve this issue, I converted the social bar container from a rigid horizontal layout into a responsive CSS Grid in \texttt{Header.css}. On desktop viewports, it displays four auto-sized columns. In a media query targeted at screens $\le$ 640px, the grid reconfigures into two columns (\texttt{grid-template-columns: repeat(2, auto);}) with reduced gap spacing and scaled-down icon graphics (1.5rem). This preserved one-tap accessibility for all social channels without distorting the header proportions or spilling over the screen edges.
+
+\begin{lstlisting}[caption=Responsive Social Bar CSS Grid]
+/* In src/Styles/Header.css */
+.socialBar {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.socialTile img {
+    width: 32px;
+    height: 32px;
+}
+
+@media (max-width: 640px) {
+    .socialBar {
+        grid-template-columns: repeat(2, auto);
+        gap: 8px;
+    }
+
+    .socialTile img {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Form Edge Collision and Focus Glow Feedback - Isaiah}
+Another issue discovered during UI testing was that input elements in the filter form and the CRUD listing section lacked consistent boundary padding. On smaller screens, the text inputs and dropdowns touched the outermost border of the root container directly. Furthermore, active input fields lacked clear visual feedback, making it difficult for users to discern which field was currently focused when editing listings.
+
+To resolve these issues, I introduced uniform horizontal padding and border-box sizing across \texttt{.listingSection}, \texttt{.filterForm}, and \texttt{.products} in \texttt{App.css}. Additionally, I applied custom focus states using the thematic accent variables, eliminating the default browser outline and adding a smooth glow effect.
+
+\begin{lstlisting}[caption=Input Container Spacing and Focus Feedback]
+/* In src/Styles/App.css */
+.listingSection,
+.filterForm,
+.products {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+.selectFilter:focus,
+.searchFilter:focus,
+.listingSelect:focus,
+.productNameInput:focus,
+.productPriceInput:focus,
+.productSellerInput:focus,
+.productCategoriesInput:focus,
+.productDescriptionInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
 \end{lstlisting}
 
 \section{Figures}
