@@ -158,6 +158,8 @@ export default function App() {
    * @param {String} b The second string
    */
   const alphabetCompare = (a, b) => {
+    a = a.toLowerCase();
+    b = b.toLowerCase();
     if (a === b) return 0;      // They are the same string so it doesn't matter which goes first
 
     for (let i = 0; i < a.length && i < b.length; i++) {
