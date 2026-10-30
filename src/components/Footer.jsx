@@ -7,7 +7,14 @@ import '../Styles/Footer.css';
 export default function Footer() {
     return (
         <footer>
-            <p>GenStore© 2026</p>
+            <nav className="footerLinks">
+                <a href="#support">Support</a>
+                <a href="#faq">FAQ</a>
+                <a href="#report">Report</a>
+                <a href="#become-a-seller">Become a seller</a>
+                <a href="#orders">Orders</a>
+            </nav>
+            <p className="copyright">Gen store 2026</p>
         </footer>
     );
 }

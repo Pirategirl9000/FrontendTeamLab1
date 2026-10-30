@@ -11,6 +11,7 @@
   &:hover {
     border-color: var(--accent-border);
   }
+
   &:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
@@ -42,8 +43,7 @@
     z-index: 1;
     top: 34px;
     height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg) scale(1.4);
   }
 
   .vite {
@@ -51,8 +51,7 @@
     top: 107px;
     height: 26px;
     width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg) scale(0.8);
   }
 }
 
@@ -75,9 +74,10 @@
   border-top: 1px solid var(--border);
   text-align: left;
 
-  & > div {
+  &>div {
     flex: 1 1 0;
     padding: 32px;
+
     @media (max-width: 1024px) {
       padding: 24px 20px;
     }
@@ -130,6 +130,7 @@
     &:hover {
       box-shadow: var(--shadow);
     }
+
     .button-icon {
       height: 18px;
       width: 18px;
@@ -156,6 +157,7 @@
 #spacer {
   height: 88px;
   border-top: 1px solid var(--border);
+
   @media (max-width: 1024px) {
     height: 48px;
   }
@@ -177,6 +179,7 @@
     left: 0;
     border-left-color: var(--border);
   }
+
   &::after {
     right: 0;
     border-right-color: var(--border);
@@ -190,7 +193,8 @@
   padding-bottom: 1em;
 }
 
-.selectFilter, .searchFilter {
+.selectFilter,
+.searchFilter {
   min-height: 40px;
   margin: 0 0.4em;
 }
@@ -242,6 +246,7 @@
 .listingSubmit {
   padding: 0.2em;
   margin: 0.4em;
+  text-transform: capitalize;
 }
 
 .listingSubmit.create {
@@ -256,3 +261,47 @@
   background: orange;
 }
 
+/* In src/Styles/App.css */
+
+.listingSection,
+.filterForm,
+.products {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+.selectFilter,
+.searchFilter,
+.listingSelect,
+.productNameInput,
+.productPriceInput,
+.productSellerInput,
+.productCategoriesInput,
+.productDescriptionInput {
+  background-color: var(--social-bg);
+  color: var(--text-h);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 15px;
+  box-sizing: border-box;
+  margin: 4px 0;
+}
+
+.selectFilter:focus,
+.searchFilter:focus,
+.listingSelect:focus,
+.productNameInput:focus,
+.productPriceInput:focus,
+.productSellerInput:focus,
+.productCategoriesInput:focus,
+.productDescriptionInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+button {
+  cursor: pointer;
+}

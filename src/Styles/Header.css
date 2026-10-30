@@ -4,8 +4,40 @@ header {
     position: sticky;
     top: 0;
     background-color: color-mix(in srgb, var(--bg) 95%, transparent);
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10%;
+    padding-right: 10%;
+    align-items: center;
+    transition: background-color 0.5s;
 }
 
 header:hover {
     background-color: color-mix(in srgb, var(--accent) 10%, var(--bg));
+}
+
+.socialBar {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.socialTile img {
+    width: 32px;
+    height: 32px;
+}
+
+
+@media (max-width: 640px) {
+    .socialBar {
+        grid-template-columns: repeat(2, auto);
+        gap: 8px;
+        scale: 1;
+    }
+
+    .socialTile img {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
 }

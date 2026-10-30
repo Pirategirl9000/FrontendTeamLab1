@@ -3,8 +3,42 @@ footer {
     border-bottom: 1px solid var(--border);
     background-color: color-mix(in srgb, var(--bg) 95%, transparent);
     margin-top: auto;
+    padding: 1.5rem 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: background-color 0.5s;
 }
 
 footer:hover {
     background-color: color-mix(in srgb, var(--accent) 10%, var(--bg));
+}
+
+.footerLinks {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Adds rows on smaller screens */
+    gap: 1rem 1.5rem;
+}
+
+.footerLinks a {
+    color: var(--text-h);
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.5s;
+}
+
+.footerLinks a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* Bottom copyright text */
+.copyright {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text);
+    margin: 0 auto;
 }
