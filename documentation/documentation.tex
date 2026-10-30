@@ -50,6 +50,9 @@ The Select filter acts very similar to search filtering but provides a more acce
 \subsection{Product Selected}
 The product selected state holds the ID of the product that is currently selected and is used for CRUD updates. This state is stored in App.jsx but the setter is passed down to the product tiles as they store information about each product tile. When a product tile is clicked this state is updated by the tile which is then used for the updating and deleting of products via the CRUD form.
 
+\subsection{Mode}
+Mode is a state hosted entirelly in App.jsx and keeps track of the current listing form mode they are in. The three modes are: create listing, delete listing, and update listing. The mode state is only used for display purposes. The mode helps change the styling of the submit button, the text of the submit button, and the instructions displayed (instructions explain how that mode works). Mode gets updated when the dropdown for the listing form changes.
+
 \section{CRUD Psuedocode - Violet}
 \begin{minipage}{12cm}  % Maybe there is a better way but I'm still pretty new to TeX
 \ttfamily
